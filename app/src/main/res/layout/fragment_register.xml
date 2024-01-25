@@ -1,14 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.register.Register">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/blue">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registrarse"
+        app:layout_constraintBottom_toTopOf="@+id/title_label_nombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"
+        android:layout_margin="30dp"/>
 
-</FrameLayout>
+    <Button
+        style="@style/Widget.Material3.Button.TextButton"
+        android:id="@+id/textButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Tienes Cuenta? Inicia Sesion!"
+        app:layout_constraintTop_toBottomOf="@id/text"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="15dp"
+        android:textSize="8dp"
+        android:textColor="@color/white"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_label_nombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre"
+        app:layout_constraintTop_toBottomOf="@+id/textButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="30dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/title_input_nombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_label_apellido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Apellido"
+        app:layout_constraintTop_toBottomOf="@+id/title_label_nombre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="30dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/title_input_apellido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_label_dni"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="DNI"
+        app:layout_constraintTop_toBottomOf="@+id/title_label_apellido"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="30dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/title_input_dni"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_label_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        app:layout_constraintTop_toBottomOf="@+id/title_label_dni"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="30dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/title_input_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_label_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        app:endIconMode="password_toggle"
+        app:layout_constraintTop_toBottomOf="@+id/title_label_email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="30dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/title_input_password"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_label_passwordconf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirmar Contraseña"
+        app:endIconMode="password_toggle"
+        app:layout_constraintTop_toBottomOf="@+id/title_label_password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="30dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/title_input_passwordconf"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_label_cpostal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Código Postal"
+        app:layout_constraintTop_toBottomOf="@+id/title_label_passwordconf"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="30dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/title_input_cpostal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_label_direc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Código Postal"
+        app:layout_constraintTop_toBottomOf="@+id/title_label_cpostal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="30dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/title_input_direc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_label_curso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Curso"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        app:layout_constraintTop_toBottomOf="@+id/title_label_direc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="30dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/auto_complete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:text="Elige el curso"
+            android:background="@color/white"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/filledButton_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registrarse"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_label_curso"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:layout_margin="30dp"
+        />
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

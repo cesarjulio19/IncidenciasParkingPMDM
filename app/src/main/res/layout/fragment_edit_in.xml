@@ -1,14 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.incidencia.EditInFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/blue">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/black"
+        >
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/top_toolbar"
+            app:title="Editar Incidencia"
+            android:minHeight="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            app:titleTextColor="@color/white"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
-</FrameLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_label_titulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Título"
+        app:layout_constraintTop_toBottomOf="@+id/bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="30dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/title_input_titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_label_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descripción"
+        app:layout_constraintTop_toBottomOf="@+id/title_label_titulo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="30dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/title_input_desc"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@color/white"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        style="@style/Widget.Material3.Button.TextButton"
+        android:id="@+id/textButton_archivo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+ Añadir Foto"
+        app:layout_constraintTop_toBottomOf="@+id/title_label_desc"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="20dp" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textButton_archivo"
+        android:contentDescription="image"
+        android:layout_margin="30dp">
+
+    </ImageView>
+
+    <Button
+        android:id="@+id/filledButton_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Editar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:layout_margin="50dp"
+        />
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
