@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.register.Register"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/blue">
 
@@ -10,7 +11,7 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrarse"
+        android:text="@string/register_title"
         app:layout_constraintBottom_toTopOf="@+id/title_label_nombre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +21,7 @@
 
     <Button
         style="@style/Widget.Material3.Button.TextButton"
-        android:id="@+id/textButton"
+        android:id="@+id/to_login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="¿Tienes Cuenta? Inicia Sesion!"
@@ -86,7 +87,7 @@
         android:id="@+id/title_label_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
+        android:hint="@string/email_label"
         app:layout_constraintTop_toBottomOf="@+id/title_label_dni"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +104,7 @@
         android:id="@+id/title_label_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Contraseña"
+        android:hint="@string/password_label"
         app:endIconMode="password_toggle"
         app:layout_constraintTop_toBottomOf="@+id/title_label_email"
         app:layout_constraintStart_toStartOf="parent"
@@ -158,7 +159,7 @@
         android:id="@+id/title_label_direc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Código Postal"
+        android:hint="@string/address_label"
         app:layout_constraintTop_toBottomOf="@+id/title_label_cpostal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -197,7 +198,7 @@
         android:id="@+id/filledButton_reg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrarse"
+        android:text="@string/register_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

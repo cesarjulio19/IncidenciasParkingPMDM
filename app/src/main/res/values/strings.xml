@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">IncidenciasParkingPMDM</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_title">Welcome</string>
+    <string name="login_title">Log in</string>
+    <string name="email_label">Email</string>
+    <string name="password_label">Password</string>
+    <string name="to_register_button">No account yet?</string>
+    <string name="login_button">Access</string>
+    <string name="incidents_title">INCIDENTS</string>
+    <string name="edit_profile_button">Edit profile</string>
+    <string name="logout_button">Log out</string>
+    <string name="register_title">Register</string>
+    <string name="address_label">Address</string>
 </resources>
