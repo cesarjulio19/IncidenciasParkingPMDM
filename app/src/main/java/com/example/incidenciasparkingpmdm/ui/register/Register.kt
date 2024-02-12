@@ -25,5 +25,8 @@ class Register : Fragment() {
             val action = RegisterDirections.actionRegisterToLogin()
             findNavController().navigate(action)
         }
+        binding.registerButton.setOnClickListener {
+            findNavController().popBackStack(R.id.welcomeFragment, false)
+        }
     }
 }

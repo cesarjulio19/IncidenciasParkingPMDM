@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parking_nav"
+    app:startDestination="@id/parkingFragment">
+
+    <fragment
+        android:id="@+id/parkingFragment"
+        android:name="com.example.incidenciasparkingpmdm.ui.parking.ParkingFragment"
+        android:label="fragment_parking"
+        tools:layout="@layout/fragment_parking" />
+</navigation>

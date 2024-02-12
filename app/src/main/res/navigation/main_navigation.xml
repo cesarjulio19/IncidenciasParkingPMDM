@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/incidenciaFragment">
-
-    <fragment
-        android:id="@+id/incidenciaFragment"
-        android:name="com.example.incidenciasparkingpmdm.ui.incidencia.IncidenciaFragment"
-        android:label="fragment_incidencia"
-        tools:layout="@layout/fragment_incidencia" />
+    app:startDestination="@id/incidents_nav">
+    <include app:graph="@navigation/incidents_nav"/>
+    <include app:graph="@navigation/parking_nav"/>
 </navigation>

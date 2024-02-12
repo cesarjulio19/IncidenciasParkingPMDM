@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/incidents_nav"
+        android:icon="@android:drawable/ic_menu_report_image"
+        android:title="@string/incidents_title" />
+    <item
+        android:id="@+id/parking_nav"
+        android:icon="@drawable/ic_car_icon"
+        android:title="@string/parking_title" />
+</menu>
