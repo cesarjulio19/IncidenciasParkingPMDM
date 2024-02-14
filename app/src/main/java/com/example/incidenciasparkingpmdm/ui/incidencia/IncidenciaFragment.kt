@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.findNavController
 import com.example.incidenciasparkingpmdm.R
 import com.example.incidenciasparkingpmdm.databinding.FragmentIncidenciaBinding
 import com.google.android.material.appbar.MaterialToolbar
@@ -37,6 +38,11 @@ class IncidenciaFragment : Fragment() {
             it.isChecked = true
             drawerLayout.close()
             true
+        }
+
+        binding.addButton.setOnClickListener {
+            val action = IncidenciaFragmentDirections.actionIncidenciaFragmentToCreateInFragment()
+            view.findNavController().navigate(action)
         }
     }
 }

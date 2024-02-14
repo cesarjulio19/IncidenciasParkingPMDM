@@ -2,6 +2,7 @@
 buildscript {
     repositories {
         google()
+        mavenCentral()
     }
     dependencies {
         classpath("androidx.navigation.safeargs.kotlin:androidx.navigation.safeargs.kotlin.gradle.plugin:2.7.5")

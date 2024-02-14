@@ -8,5 +8,29 @@
         android:id="@+id/incidenciaFragment"
         android:name="com.example.incidenciasparkingpmdm.ui.incidencia.IncidenciaFragment"
         android:label="fragment_incidencia"
-        tools:layout="@layout/fragment_incidencia" />
+        tools:layout="@layout/fragment_incidencia" >
+        <action
+            android:id="@+id/action_incidenciaFragment_to_createInFragment"
+            app:destination="@id/createInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createInFragment"
+        android:name="com.example.incidenciasparkingpmdm.ui.incidencia.CreateInFragment"
+        android:label="CreateInFragment" >
+        <action
+            android:id="@+id/action_createInFragment_to_previewCameraFragment"
+            app:destination="@id/previewCameraFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/previewCameraFragment"
+        android:name="com.example.incidenciasparkingpmdm.ui.incidencia.camera.PreviewCameraFragment"
+        android:label="PreviewCameraFragment" >
+        <action
+            android:id="@+id/action_previewCameraFragment_to_cameraImageFragment"
+            app:destination="@id/cameraImageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraImageFragment"
+        android:name="com.example.incidenciasparkingpmdm.ui.incidencia.camera.CameraImageFragment"
+        android:label="CameraImageFragment" />
 </navigation>

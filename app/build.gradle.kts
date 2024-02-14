@@ -59,5 +59,14 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
     //Circle Image
     implementation("de.hdodenhof:circleimageview:3.1.0")
+    // CameraX
+    implementation ("androidx.camera:camera-core:1.3.1")
+    implementation ("androidx.camera:camera-camera2:1.3.1")
+    implementation ("androidx.camera:camera-lifecycle:1.3.1")
+    implementation ("androidx.camera:camera-video:1.3.1")
+    implementation ("androidx.camera:camera-view:1.3.1")
+    implementation ("androidx.camera:camera-extensions:1.3.1")
+    //Glid
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
 }
