@@ -9,6 +9,7 @@
     <string name="incidents_title">INCIDENTS</string>
     <string name="parking_title">PARKING</string>
     <string name="add_inc_title">NEW INCIDENT</string>
+    <string name="edit_inc_title">EDIT INCIDENT</string>
     <string name="edit_profile_button">Edit profile</string>
     <string name="logout_button">Log out</string>
     <string name="register_title">Register</string>

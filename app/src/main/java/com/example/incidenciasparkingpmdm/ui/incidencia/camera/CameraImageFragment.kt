@@ -1,6 +1,7 @@
 package com.example.incidenciasparkingpmdm.ui.incidencia.camera
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -32,7 +33,7 @@ class CameraImageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         incidentViewModel.fileCapture.observe(viewLifecycleOwner) { data ->
-
+            Log.e("IMAGE", "${data}")
             Glide.with(this)
                 .load(data)
                 .into(binding.image1)

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/blue">
+    >
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bar"
@@ -70,8 +70,8 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textButton_archivo"
@@ -81,7 +81,7 @@
     </ImageView>
 
     <Button
-        android:id="@+id/filledButton_create"
+        android:id="@+id/filledButton_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Editar"

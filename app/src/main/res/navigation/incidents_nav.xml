@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_incidenciaFragment_to_createInFragment"
             app:destination="@id/createInFragment" />
+        <action
+            android:id="@+id/action_incidenciaFragment_to_editInFragment"
+            app:destination="@id/editInFragment" />
     </fragment>
     <fragment
         android:id="@+id/createInFragment"
@@ -33,4 +36,15 @@
         android:id="@+id/cameraImageFragment"
         android:name="com.example.incidenciasparkingpmdm.ui.incidencia.camera.CameraImageFragment"
         android:label="CameraImageFragment" />
+    <fragment
+        android:id="@+id/editInFragment"
+        android:name="com.example.incidenciasparkingpmdm.ui.incidencia.EditInFragment"
+        android:label="EditInFragment" >
+        <action
+            android:id="@+id/action_editInFragment_to_previewCameraFragment"
+            app:destination="@id/previewCameraFragment" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

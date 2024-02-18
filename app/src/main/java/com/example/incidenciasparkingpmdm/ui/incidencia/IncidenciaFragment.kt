@@ -44,5 +44,12 @@ class IncidenciaFragment : Fragment() {
             val action = IncidenciaFragmentDirections.actionIncidenciaFragmentToCreateInFragment()
             view.findNavController().navigate(action)
         }
+
+    }
+
+    private fun onShowEdit(id: Int,view:View) {
+        val action = IncidenciaFragmentDirections
+            .actionIncidenciaFragmentToEditInFragment(id)
+        view.findNavController().navigate(action)
     }
 }

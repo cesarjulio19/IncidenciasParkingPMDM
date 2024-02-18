@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.incidencia.IncidenciaFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/incident_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:paddingHorizontal="8dp"/>
+
+
     <Button
         android:id="@+id/add_button"
         style="?attr/materialIconButtonFilledStyle"
@@ -16,4 +25,9 @@
         app:icon="@android:drawable/ic_menu_edit"
         android:layout_gravity="bottom | end"
         android:layout_margin="16dp"/>
+
+
+
+
+
 </FrameLayout>
