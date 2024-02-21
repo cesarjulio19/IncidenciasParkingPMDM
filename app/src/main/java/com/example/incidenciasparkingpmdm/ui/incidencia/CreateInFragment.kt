@@ -1,10 +1,13 @@
 package com.example.incidenciasparkingpmdm.ui.incidencia
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -52,6 +55,30 @@ class CreateInFragment : Fragment() {
 
         }
 
+        binding.textButtonGaleria.setOnClickListener {
+            pickPhotoFromGallery()
+        }
 
+
+    }
+
+    private val startForActivityGallery = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ){result->
+
+        if(result.resultCode == Activity.RESULT_OK){
+            val data = result.data?.data
+
+            Glide.with(this)
+                .load(data)
+                .into(binding.image)
+        }
+
+    }
+
+    private fun pickPhotoFromGallery() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        startForActivityGallery.launch(intent)
     }
 }

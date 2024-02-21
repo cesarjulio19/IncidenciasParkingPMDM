@@ -33,4 +33,15 @@
         android:padding="16dp"
         android:text="Curso"
         android:textColor="@color/black"/>
+
+    <Button
+        style="@style/Widget.Material3.Button.TextButton"
+        android:id="@+id/textButton_editar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Editar Perfil"
+        android:padding="16dp"
+        android:textColor="@color/white"
+        android:onClick="onEditProfile"
+        />
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.example.incidenciasparkingpmdm
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -30,6 +31,9 @@ class MainActivity : AppCompatActivity() {
         )
         navView.setupWithNavController(navController)
 
+    }
 
+    fun onEditProfile(view: View){
+        navController.navigate(R.id.editUserFragment)
     }
 }

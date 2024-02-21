@@ -80,7 +80,7 @@ class PreviewCameraFragment : Fragment() {
         }
 
         binding.boton.setOnClickListener {
-            takePhoto(view)
+            takePhoto()
 
 
         }
@@ -99,6 +99,8 @@ class PreviewCameraFragment : Fragment() {
                  .into(binding.image)
 
             }
+
+
     }
 
     private fun getOutputDirectory(): File {
@@ -115,7 +117,7 @@ class PreviewCameraFragment : Fragment() {
 
 
 
-    private fun takePhoto(view: View){
+    private fun takePhoto(){
 
         val imageCapture = imageCapture ?: return
         val photoFile = File(
