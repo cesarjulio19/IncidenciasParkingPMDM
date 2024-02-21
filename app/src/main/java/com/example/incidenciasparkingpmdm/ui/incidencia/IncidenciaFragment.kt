@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import com.example.incidenciasparkingpmdm.R
+import com.example.incidenciasparkingpmdm.api.IncidentApi
 import com.example.incidenciasparkingpmdm.databinding.FragmentIncidenciaBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
@@ -15,7 +16,6 @@ import com.google.android.material.navigation.NavigationView
 
 class IncidenciaFragment : Fragment() {
     private lateinit var binding: FragmentIncidenciaBinding
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

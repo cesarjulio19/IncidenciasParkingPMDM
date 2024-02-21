@@ -1,6 +1,7 @@
 package com.example.incidenciasparkingpmdm.ui.welcome
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,8 +26,13 @@ class WelcomeFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.registerButton.setOnClickListener {
-            val action = WelcomeFragmentDirections.actionWelcomeFragmentToRegister()
-            findNavController().navigate(action)
+            try {
+                val action = WelcomeFragmentDirections.actionWelcomeFragmentToRegister()
+                findNavController().navigate(action)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.e("NAVEGACION", "${e.printStackTrace()}")
+            }
         }
     }
 }
