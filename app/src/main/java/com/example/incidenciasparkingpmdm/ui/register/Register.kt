@@ -1,30 +1,26 @@
 package com.example.incidenciasparkingpmdm.ui.register
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.incidenciasparkingpmdm.Application
-import com.example.incidenciasparkingpmdm.MainActivity
-import com.example.incidenciasparkingpmdm.R
 import com.example.incidenciasparkingpmdm.api.IncidentService
 import com.example.incidenciasparkingpmdm.databinding.FragmentRegisterBinding
 import com.example.incidenciasparkingpmdm.ui.user.User
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
-import okhttp3.RequestBody
-import javax.inject.Inject
-import com.google.gson.Gson
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class Register : Fragment() {
@@ -64,7 +60,7 @@ class Register : Fragment() {
         // Al pulsar el boton de registrar
         binding.registerButton.setOnClickListener {
             // si las 2 contraseñas son iguales
-                  if(binding.titleInputPassword.toString() == binding.titleInputPasswordconf.toString()) {
+                  if(binding.titleInputPassword.text.toString() == binding.titleInputPasswordconf.text.toString()) {
 
                       val codigoPostalString = binding.titleInputCpostal.text.toString()
                       // creo las variables de filebyte, file y el codigo postal de tipo entero

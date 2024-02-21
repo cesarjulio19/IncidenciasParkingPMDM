@@ -1,16 +1,9 @@
 package com.example.incidenciasparkingpmdm.api
 
-import android.util.Base64
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import okhttp3.Interceptor
 import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
 import okhttp3.RequestBody
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
@@ -22,7 +15,7 @@ import javax.inject.Singleton
 interface IncidentApi{
     @Multipart
     @POST("/api/users")
-    suspend fun addNewUser(
+    fun addNewUser(
         @Part("user") user: RequestBody,
         @Part filePart: MultipartBody.Part
     ): retrofit2.Response<String>
