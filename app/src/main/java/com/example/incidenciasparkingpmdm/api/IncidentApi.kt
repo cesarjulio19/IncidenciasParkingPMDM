@@ -37,8 +37,10 @@ interface IncidentApi{
  */
 @Singleton
 class IncidentService @Inject constructor(){
+    // Cambialo a como tengas la ip de tu pc, luego ya probaremos con la dirección de la api remoto
+    private val direccionHttp:String = "http://192.168.1.59:8080/"
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://localhost:8080/")
+        .baseUrl(direccionHttp)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

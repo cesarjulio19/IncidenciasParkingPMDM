@@ -1,6 +1,7 @@
 package com.example.incidenciasparkingpmdm.ui.register
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,9 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import javax.inject.Inject
 
@@ -94,6 +98,20 @@ class Register : Fragment() {
 
                       lifecycleScope.launch {
                           val response = incidentService.api.addNewUser(user)
+                          response.enqueue(object : Callback<String> {
+                              override fun onResponse(call: Call<String>, response: Response<String>) {
+                                  if(!response.isSuccessful) {
+                                      Log.e("No esito","no tuvo esito")
+                                  }
+                                  response.body()
+                              }
+
+                              override fun onFailure(call: Call<String>, t: Throwable) {
+
+                              }
+
+                          })
+                          Log.e("RESPONSE", response.toString())
                           val action = RegisterDirections.actionRegisterToLogin()
                           findNavController().navigate(action)
                       }
