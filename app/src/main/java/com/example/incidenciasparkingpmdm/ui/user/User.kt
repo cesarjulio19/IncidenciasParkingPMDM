@@ -12,5 +12,4 @@ data class User(val name: String,
     val rol: String,
     val schoolyear: String,
     val parkingAccess: Boolean)
-    //val file: ByteArray,
-    //val typeFile: String)
+

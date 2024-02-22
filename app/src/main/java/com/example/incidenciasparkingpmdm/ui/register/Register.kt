@@ -84,11 +84,7 @@ class Register : Fragment() {
                           //fileByte,
                           //""
                       )
-                      // creo el requestBody del usuario convirtiendolo en json
-                      val userRequestBody = RequestBody.create(
-                          MediaType.parse("application/json"),
-                          Gson().toJson(user)
-                      )
+
                       // creo el requestBody del file, al ser la creacion de usuario no tenemos foto
                       val fileRequestBody = RequestBody.create(
                           MediaType
@@ -104,7 +100,7 @@ class Register : Fragment() {
                               el  userRequestBody y el filePart
                                */
                               val response = incidentService.api.
-                              addNewUser(userRequestBody, filePart)
+                              addNewUser(user, filePart)
                               // si se ha realizado con exito navego al login, si no no hace nada
                               if (response.isSuccessful) {
 

@@ -1,5 +1,6 @@
 package com.example.incidenciasparkingpmdm.api
 
+import com.example.incidenciasparkingpmdm.ui.user.User
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Retrofit
@@ -15,9 +16,9 @@ import javax.inject.Singleton
 interface IncidentApi{
     @Multipart
     @POST("/api/users")
-    fun addNewUser(
-        @Part("user") user: RequestBody,
-        @Part filePart: MultipartBody.Part
+    suspend fun addNewUser(
+        @Part("user") user: User,
+        @Part("file") filePart: MultipartBody.Part
     ): retrofit2.Response<String>
 
     @GET("/getCsrfToken")
