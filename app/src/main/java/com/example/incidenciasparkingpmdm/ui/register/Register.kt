@@ -1,7 +1,6 @@
 package com.example.incidenciasparkingpmdm.ui.register
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.incidenciasparkingpmdm.api.IncidentService
 import com.example.incidenciasparkingpmdm.databinding.FragmentRegisterBinding
 import com.example.incidenciasparkingpmdm.ui.user.User
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
@@ -94,28 +92,10 @@ class Register : Fragment() {
                       val filePart = MultipartBody.Part
                           .createFormData("file", file.name, fileRequestBody)
 
-                      viewLifecycleOwner.lifecycleScope.launch {
-                          try {
-                              /* llamo al incidentService para realizar el addNewUser y le paso
-                              el  userRequestBody y el filePart
-                               */
-                              val response = incidentService.api.
-                              addNewUser(user, filePart)
-                              // si se ha realizado con exito navego al login, si no no hace nada
-                              if (response.isSuccessful) {
-
-                                  val responseBody = response.body()
-                                  Log.e("DENTRO", "OPERACION REALIZADA CON ÉXITO")
-                                  val action = RegisterDirections.actionRegisterToLogin()
-                                  findNavController().navigate(action)
-                              } else {
-                                  Log.e("NO DENTRO", "OPERACIÓN FALLIDA")
-                                  val errorBody = response.errorBody()
-                              }
-                          } catch (e: Exception) {
-
-                              e.printStackTrace()
-                          }
+                      lifecycleScope.launch {
+                          val response = incidentService.api.addNewUser(user)
+                          val action = RegisterDirections.actionRegisterToLogin()
+                          findNavController().navigate(action)
                       }
 
                   }

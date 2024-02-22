@@ -1,29 +1,25 @@
 package com.example.incidenciasparkingpmdm.api
 
 import com.example.incidenciasparkingpmdm.ui.user.User
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.Multipart
 import retrofit2.http.POST
-import retrofit2.http.Part
 import javax.inject.Inject
 import javax.inject.Singleton
 // Interfaz para los endPoint
 interface IncidentApi{
-    @Multipart
-    @POST("/api/users")
-    suspend fun addNewUser(
-        @Part("user") user: User,
-        @Part("file") filePart: MultipartBody.Part
-    ): retrofit2.Response<String>
+    @POST("register")
+     fun addNewUser(
+        @Body user: User,
+        //@Part file: MultipartBody.Part?
+    ): Call<String>
 
-    @GET("/getCsrfToken")
+    @GET("csrf")
     suspend fun getCsrfToken(@Header("Authorization") authHeader: String): CsrfToken
-
 }
 
 /*class CsrfInterceptor(private val csrfToken: String) : Interceptor {
@@ -42,7 +38,7 @@ interface IncidentApi{
 @Singleton
 class IncidentService @Inject constructor(){
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://localhost:8080")
+        .baseUrl("http://localhost:8080/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
