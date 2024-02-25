@@ -8,18 +8,22 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 import javax.inject.Inject
 import javax.inject.Singleton
 // Interfaz para los endPoint
 interface IncidentApi{
     @POST("register")
-     fun addNewUser(
+    fun addNewUser(
         @Body user: User,
         //@Part file: MultipartBody.Part?
     ): Call<String>
 
     @GET("csrf")
     suspend fun getCsrfToken(@Header("Authorization") authHeader: String): CsrfToken
+
+    @GET("api/users/{email}")
+    suspend fun getUserByEmail(@Path("email") email: String): User
 }
 
 /*class CsrfInterceptor(private val csrfToken: String) : Interceptor {
