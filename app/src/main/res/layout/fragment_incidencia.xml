@@ -13,8 +13,6 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:paddingHorizontal="8dp"/>
-
-
     <Button
         android:id="@+id/add_button"
         style="?attr/materialIconButtonFilledStyle"

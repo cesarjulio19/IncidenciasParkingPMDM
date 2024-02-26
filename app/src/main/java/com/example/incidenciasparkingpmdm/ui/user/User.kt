@@ -1,5 +1,7 @@
 package com.example.incidenciasparkingpmdm.ui.user
 
+import java.io.Serializable
+
 data class User(val name: String,
     val surname: String,
     val nif: String,
@@ -9,5 +11,5 @@ data class User(val name: String,
     val address: String,
     val rol: String,
     val schoolYear: String,
-    val parkingAccess: Boolean)
+    val parkingAccess: Boolean): Serializable
 

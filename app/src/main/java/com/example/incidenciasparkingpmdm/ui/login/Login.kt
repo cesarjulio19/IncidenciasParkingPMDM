@@ -41,6 +41,7 @@ class Login : Fragment() {
                 val callUser = service.api.getUserByEmail(email = binding.emailInput.editText!!.text.toString());
                 if(callUser.password == binding.passwordInput.editText!!.text.toString()) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    intent.putExtra("user",callUser)
                     startActivity(intent)
                 } else {
                     Log.e("ERROR", "Contraseña incorrecta")
