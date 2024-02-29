@@ -1,13 +1,19 @@
 package com.example.incidenciasparkingpmdm.api
 
+import com.example.incidenciasparkingpmdm.ui.incidencia.Incident
+import com.example.incidenciasparkingpmdm.ui.incidencia.IncidentDto
 import com.example.incidenciasparkingpmdm.ui.user.User
+import com.example.incidenciasparkingpmdm.ui.user.UserId
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,7 +29,12 @@ interface IncidentApi{
     suspend fun getCsrfToken(@Header("Authorization") authHeader: String): CsrfToken
 
     @GET("api/users/{email}")
-    suspend fun getUserByEmail(@Path("email") email: String): User
+    suspend fun getUserByEmail(@Path("email") email: String): UserId
+
+    @Multipart
+    @POST("api/incidents")
+    suspend fun addIncident(@Part("incident") incident: IncidentDto,
+                            @Part("file") file:MultipartBody.Part): Call<String>
 }
 
 /*class CsrfInterceptor(private val csrfToken: String) : Interceptor {

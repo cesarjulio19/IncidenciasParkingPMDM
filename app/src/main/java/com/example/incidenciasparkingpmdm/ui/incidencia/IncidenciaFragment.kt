@@ -9,12 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.incidenciasparkingpmdm.R
 import com.example.incidenciasparkingpmdm.databinding.FragmentIncidenciaBinding
+import com.example.incidenciasparkingpmdm.ui.user.UserId
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class IncidenciaFragment : Fragment() {
     private lateinit var binding: FragmentIncidenciaBinding
+    val user: UserId = arguments?.get("user") as UserId
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,7 +43,7 @@ class IncidenciaFragment : Fragment() {
         }
 
         binding.addButton.setOnClickListener {
-            val action = IncidenciaFragmentDirections.actionIncidenciaFragmentToCreateInFragment()
+            val action = IncidenciaFragmentDirections.actionIncidenciaFragmentToCreateInFragment(user.id)
             view.findNavController().navigate(action)
         }
 

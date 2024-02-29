@@ -13,6 +13,7 @@ import com.example.incidenciasparkingpmdm.R
 import com.example.incidenciasparkingpmdm.databinding.FragmentCreateInBinding
 import com.example.incidenciasparkingpmdm.databinding.FragmentEditInBinding
 import com.google.android.material.appbar.MaterialToolbar
+import dagger.hilt.android.AndroidEntryPoint
 
 
 class EditInFragment : Fragment() {
