@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.incidenciasparkingpmdm.MainActivity
 import com.example.incidenciasparkingpmdm.api.IncidentService
 import com.example.incidenciasparkingpmdm.databinding.FragmentLoginBinding
+import com.example.incidenciasparkingpmdm.ui.user.Credentials
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,12 +39,15 @@ class Login : Fragment() {
         binding.loginButton.setOnClickListener {
             val intent = Intent(this.activity, MainActivity::class.java)
             lifecycleScope.launch {
-                val callUser = service.api.getUserByEmail(email = binding.emailInput.editText!!.text.toString());
-                if(callUser.password == binding.passwordInput.editText!!.text.toString()) {
+                val credentials = Credentials(binding.emailInput.editText?.text.toString(), binding.passwordInput.editText?.text.toString())
+                val isLogged = service.api.login(credentials)
+                if (isLogged) {
+                    val callUser = service.api.getUserByEmail(credentials.email);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     intent.putExtra("user",callUser)
                     startActivity(intent)
-                } else {
+                }
+                 else {
                     Log.e("ERROR", "Contraseña incorrecta")
                 }
             }

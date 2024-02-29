@@ -72,7 +72,7 @@ class Register : Fragment() {
                 /* creo el usuario( no se si esta bien construido ya que no se si tambien
                 hay que añadirle el file o ya directamente se lo pasas con el multipart)
                 */
-                val user: User = User(
+                val user: User = User(null,
                   binding.titleInputNombre.text.toString(),
                   binding.titleInputApellido.text.toString(),
                   binding.titleInputDni.text.toString(),
@@ -102,6 +102,8 @@ class Register : Fragment() {
                         override fun onResponse(call: Call<String>, response: Response<String>) {
                             if(!response.isSuccessful) {
                               Log.e("No esito","no tuvo esito")
+                            } else {
+                                Log.e("Esito", "tuvo esito")
                             }
                             response.body()
                         }
