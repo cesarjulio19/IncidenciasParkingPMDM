@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.incidencia.CreateInFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -50,13 +52,24 @@
         android:layout_margin="20dp"
         android:textColor="@color/white"/>
 
+    <Button
+        style="@style/Widget.Material3.Button.TextButton"
+        android:id="@+id/textButton_galeria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+ Añadir Foto Galeria"
+        app:layout_constraintTop_toBottomOf="@+id/textButton_archivo"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="20dp"
+        android:textColor="@color/white"/>
+
     <ImageView
         android:id="@+id/image"
         android:layout_width="300dp"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textButton_archivo"
+        app:layout_constraintTop_toBottomOf="@+id/textButton_galeria"
         android:contentDescription="image"
         android:layout_margin="30dp">
 
@@ -76,15 +89,6 @@
         android:layout_margin="50dp"
         />
 
-
-
-
-
-
-
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

@@ -9,5 +9,22 @@
         android:id="@+id/parkingFragment"
         android:name="com.example.incidenciasparkingpmdm.ui.parking.ParkingFragment"
         android:label="fragment_parking"
-        tools:layout="@layout/fragment_parking" />
+        tools:layout="@layout/fragment_parking" >
+        <action
+            android:id="@+id/action_parkingFragment_to_solParkingFragment"
+            app:destination="@id/solParkingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/solParkingFragment"
+        android:name="com.example.incidenciasparkingpmdm.ui.parking.SolParkingFragment"
+        android:label="SolParkingFragment" >
+        <action
+            android:id="@+id/action_solParkingFragment_to_parkingSolPenFragment"
+            app:destination="@id/parkingSolPenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/parkingSolPenFragment"
+        android:name="com.example.incidenciasparkingpmdm.ui.parking.ParkingSolPenFragment"
+        android:label="ParkingSolPenFragment" >
+    </fragment>
 </navigation>

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.incidencia.IncidenciaFragment">
+    tools:context=".ui.incidencia.IncidenciaFragment"
+    android:padding="16dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/incident_list"
@@ -13,8 +14,6 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:paddingHorizontal="8dp"/>
-
-
     <Button
         android:id="@+id/add_button"
         style="?attr/materialIconButtonFilledStyle"

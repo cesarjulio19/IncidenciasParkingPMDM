@@ -6,33 +6,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/blue">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/black"
-        >
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/top_toolbar"
-            app:title="Solicitar Parking"
-            android:minHeight="?attr/actionBarSize"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            app:titleTextColor="@color/white"/>
-
-
-
-    </com.google.android.material.appbar.AppBarLayout>
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/title_label_matr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Matricula"
-        app:layout_constraintTop_toBottomOf="@+id/bar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="30dp"
@@ -86,8 +65,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_label_color"
-        android:background="@color/white"
-        android:textColor="@color/black"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
         android:layout_margin="100dp"
         />
 

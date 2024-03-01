@@ -1,14 +1,12 @@
 package com.example.incidenciasparkingpmdm.ui.incidencia
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.incidenciasparkingpmdm.databinding.IncidentItemBinding
 
 
-class IncidentAdapter(private val context: Context, private val onShowEdit:(id:Int, v: View)->Unit)
+class IncidentAdapter(private val onShowEdit:(incident:Incident)->Unit)
     : RecyclerView.Adapter<IncidentAdapter.IncidentItemViewHolder>() {
 
     private var incidentList: List<Incident> = emptyList()
@@ -20,13 +18,14 @@ class IncidentAdapter(private val context: Context, private val onShowEdit:(id:I
             binding.title.text = i.title
             binding.description.text = i.description
             binding.date.text = i.date
-            if(!i.state){
+            if(i.state == null){
                 binding.state2.text = ""
             }
 
 
             binding.incident.setOnClickListener(){
-                onShowEdit(i.id,binding.root)
+                if(i.idInc != null)
+                    onShowEdit(i)
             }
 
         }
