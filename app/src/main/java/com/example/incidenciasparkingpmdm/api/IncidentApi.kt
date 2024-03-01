@@ -3,12 +3,17 @@ package com.example.incidenciasparkingpmdm.api
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.incidenciasparkingpmdm.ui.incidencia.Incident
+import com.example.incidenciasparkingpmdm.ui.parking.ParkingRequest
+import com.example.incidenciasparkingpmdm.ui.parking.ParkingRequestDto
+import com.example.incidenciasparkingpmdm.ui.parking.Vehicle
+import com.example.incidenciasparkingpmdm.ui.parking.VehicleDto
 import com.example.incidenciasparkingpmdm.ui.user.Credentials
 import com.example.incidenciasparkingpmdm.ui.user.User
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -40,6 +45,24 @@ interface IncidentApi{
 
     @GET("api/incidents/{idInc}")
     suspend fun getIncident(@Path("idInc") idInc: Int): Incident
+
+    @POST("api/vehicles")
+    fun addVehicle(@Body vehicle: VehicleDto): Call<String>
+
+    @POST("api/parking_requests")
+    fun addRequest(@Body pRequest: ParkingRequestDto): Call<String>
+
+    @GET("api/parking_requests")
+    suspend fun getAllParkingRequests(): List<ParkingRequest>
+
+    @DELETE("api/parking_requests/{idReq}")
+    fun deleteParkingRequest(@Path("idReq") idReq:Int): Call<String>
+
+    @GET("api/vehicles")
+    suspend fun getAllVehicles(): List<Vehicle>
+
+    @DELETE("api/vehicles/{idV}")
+    fun deleteVehicle(@Path("idV") idV: Int): Call<String>
 }
 
 /*class CsrfInterceptor(private val csrfToken: String) : Interceptor {

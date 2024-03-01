@@ -1,60 +1,87 @@
 package com.example.incidenciasparkingpmdm.ui.parking
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.incidenciasparkingpmdm.R
+import com.example.incidenciasparkingpmdm.api.IncidentService
+import com.example.incidenciasparkingpmdm.databinding.FragmentSolParkingBinding
+import com.example.incidenciasparkingpmdm.ui.user.User
+import com.google.android.material.appbar.MaterialToolbar
+import dagger.hilt.android.AndroidEntryPoint
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SolParkingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class SolParkingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private lateinit var binding: FragmentSolParkingBinding
+    @Inject
+    lateinit var service: IncidentService
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sol_parking, container, false)
+        binding = FragmentSolParkingBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SolParkingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SolParkingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val user = this.requireActivity().intent.getSerializableExtra("user") as? User
+        val topAppBar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
+        topAppBar.title = getString(R.string.parking_request)
+        topAppBar.setNavigationIcon(R.drawable.ic_arrow_back)
+        topAppBar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+        if(user != null) {
+            binding.filledButtonSolicitarParking.setOnClickListener {
+                val vehicle = VehicleDto(binding.titleInputMarc.text.toString(),
+                    binding.titleInputColor.text.toString(),
+                    binding.titleInputMatr.text.toString(),
+                    user.id!!)
+                val pRequest = ParkingRequestDto(null, null, user.id)
+                val callVehicle = service.api.addVehicle(vehicle)
+                val callRequest = service.api.addRequest(pRequest)
+                callVehicle.enqueue(object : Callback<String> {
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        if(response.isSuccessful) {
+                            Log.e("Exito", response.body().toString())
+                        } else {
+                            Log.e("No exito","no exito")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        Log.e("Fallo", t.message.toString())
+                    }
+
+                })
+                callRequest.enqueue(object : Callback<String> {
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        if(response.isSuccessful) {
+                            Log.e("Exito", response.body().toString())
+                        } else {
+                            Log.e("No exito","no exito")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        Log.e("Fallo", t.message.toString())
+                    }
+
+                })
+                val action =
+                    SolParkingFragmentDirections
+                        .actionSolParkingFragmentToParkingSolPenFragment()
+                findNavController().navigate(action)
             }
+        }
     }
 }

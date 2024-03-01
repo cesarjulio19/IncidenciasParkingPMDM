@@ -14,7 +14,12 @@
     <string name="logout_button">Log out</string>
     <string name="register_title">Register</string>
     <string name="address_label">Address</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tomar_foto">Tomar Foto</string>
+    <string name="parking_request">PARKING REQUEST</string>
+    <string name="tomar_foto">Take Photo</string>
+    <string name="pending_parking_request">Pending</string>
+    <string name="delete">Delete</string>
+    <string name="state">State</string>
+    <string name="color">Color</string>
+    <string name="brand_model">Brand and Model</string>
+    <string name="licensePlate">License plate</string>
 </resources>

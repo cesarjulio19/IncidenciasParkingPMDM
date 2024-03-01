@@ -8,24 +8,6 @@
     android:background="@color/blue"
     tools:context=".ui.parking.ParkingFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/black"
-        >
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/top_toolbar"
-            app:title="Parking"
-            android:minHeight="?attr/actionBarSize"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            app:titleTextColor="@color/white"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
         android:id="@+id/text"
@@ -34,11 +16,11 @@
         android:text="No tienes acceso al parking"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bar"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="100dp"
         android:textAlignment="center"
         android:textSize="20dp"
-        android:textColor="@color/white"></TextView>
+        android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/filledButton_solicitar_Parking"
@@ -48,8 +30,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text"
-        android:background="@color/white"
-        android:textColor="@color/black"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
         android:layout_margin="30dp"
         />
 
