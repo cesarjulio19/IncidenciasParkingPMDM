@@ -6,17 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.incidenciasparkingpmdm.R
+import com.example.incidenciasparkingpmdm.api.IncidentService
 import com.example.incidenciasparkingpmdm.databinding.FragmentIncidenciaBinding
 import com.example.incidenciasparkingpmdm.ui.user.UserId
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class IncidenciaFragment : Fragment() {
     private lateinit var binding: FragmentIncidenciaBinding
+    @Inject
+    lateinit var incidentService: IncidentService
     val user: UserId = arguments?.get("user") as UserId
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +51,17 @@ class IncidenciaFragment : Fragment() {
         binding.addButton.setOnClickListener {
             val action = IncidenciaFragmentDirections.actionIncidenciaFragmentToCreateInFragment(user.id)
             view.findNavController().navigate(action)
+        }
+
+        val adapter = IncidentAdapter(requireContext(), ::onShowEdit)
+        val rv = binding.incidentList
+        rv.adapter = adapter
+
+        lifecycleScope.launch {
+            val set = incidentService.api.getIncidentsByUserId(user.id)
+            val list = set.toList()
+
+            adapter.submitList(list)
         }
 
     }

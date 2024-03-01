@@ -35,6 +35,9 @@ interface IncidentApi{
     @POST("api/incidents")
     suspend fun addIncident(@Part("incident") incident: IncidentDto,
                             @Part("file") file:MultipartBody.Part): Call<String>
+
+    @GET("api/{userId}/incidents")
+    suspend fun getIncidentsByUserId(@Path("userId") userId: Int ): Set<Incident>
 }
 
 /*class CsrfInterceptor(private val csrfToken: String) : Interceptor {

@@ -22,11 +22,16 @@ class IncidentAdapter(private val context: Context, private val onShowEdit:(id:I
             binding.date.text = i.date
             if(!i.state){
                 binding.state2.text = ""
+                binding.state.text = ""
+                binding.date.text = ""
+            }else{
+                binding.state2.text = "Enviado"
+                binding.date.text = i.date
             }
 
 
             binding.incident.setOnClickListener(){
-                onShowEdit(i.id,binding.root)
+                i.id?.let { it1 -> onShowEdit(it1,binding.root) }
             }
 
         }
