@@ -58,7 +58,4 @@ class EditInFragment : Fragment() {
         incidentViewModel.fetchIncident(args.id)
         incidentViewModel.incident.observe(viewLifecycleOwner,observer)
     }
-
-
-
 }

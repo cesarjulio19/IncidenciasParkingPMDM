@@ -22,7 +22,6 @@ class IncidentAdapter(private val onShowEdit:(incident:Incident)->Unit)
                 binding.state2.text = ""
             }
 
-
             binding.incident.setOnClickListener(){
                 if(i.idInc != null)
                     onShowEdit(i)

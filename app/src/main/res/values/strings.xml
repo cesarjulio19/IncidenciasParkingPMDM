@@ -22,4 +22,5 @@
     <string name="color">Color</string>
     <string name="brand_model">Brand and Model</string>
     <string name="licensePlate">License plate</string>
+    <string name="take_photo">CAMERA</string>
 </resources>

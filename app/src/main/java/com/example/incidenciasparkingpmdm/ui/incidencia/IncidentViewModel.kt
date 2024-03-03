@@ -1,5 +1,6 @@
 package com.example.incidenciasparkingpmdm.ui.incidencia
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -19,12 +20,17 @@ class IncidentViewModel @Inject constructor(private val service: IncidentService
         }
     private val observer = Observer<List<Incident>> {
         val list = it.map {
-            Incident(it.idInc, it.title, it.description, it.state, it.date, it.userId)
+            Incident(it.idInc, it.title, it.description, it.state, it.date, it.userId, it.file, it.fileType)
         }
+
         _incidentList.value = list
     }
     private val _fileCapture = MutableLiveData<File>()
     val fileCapture: LiveData<File> get() = _fileCapture
+
+    private val _uri = MutableLiveData<Uri>()
+
+    val uri: MutableLiveData<Uri> get() = _uri
 
     private val _incident = MutableLiveData<Incident>()
     val incident: LiveData<Incident>
@@ -34,6 +40,10 @@ class IncidentViewModel @Inject constructor(private val service: IncidentService
 
     fun updateFileData(data: File){
         _fileCapture.value = data
+    }
+
+    fun updateUriData(data: Uri){
+        _uri.value = data
     }
 
     init {
@@ -52,4 +62,5 @@ class IncidentViewModel @Inject constructor(private val service: IncidentService
             _incident.value = service.getIncident(id)
         }
     }
+
 }

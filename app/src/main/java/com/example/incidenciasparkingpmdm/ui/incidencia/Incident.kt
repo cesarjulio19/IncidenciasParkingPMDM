@@ -6,5 +6,7 @@ data class Incident(
     val description: String,
     val state: Boolean?,
     val date: String?,
-    val userId: Int
-    /*val file: File*/)
+    val userId: Int,
+    val file: String,
+    val fileType: String
+)

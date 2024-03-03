@@ -3,12 +3,14 @@ package com.example.incidenciasparkingpmdm.api
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.incidenciasparkingpmdm.ui.incidencia.Incident
+import com.example.incidenciasparkingpmdm.ui.incidencia.IncidentDto
 import com.example.incidenciasparkingpmdm.ui.parking.ParkingRequest
 import com.example.incidenciasparkingpmdm.ui.parking.ParkingRequestDto
 import com.example.incidenciasparkingpmdm.ui.parking.Vehicle
 import com.example.incidenciasparkingpmdm.ui.parking.VehicleDto
 import com.example.incidenciasparkingpmdm.ui.user.Credentials
 import com.example.incidenciasparkingpmdm.ui.user.User
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,7 +18,9 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -27,7 +31,6 @@ interface IncidentApi{
         @Body user: User,
         //@Part file: MultipartBody.Part?
     ): Call<String>
-
     @GET("csrf")
     suspend fun getCsrfToken(@Header("Authorization") authHeader: String): CsrfToken
 
@@ -37,8 +40,10 @@ interface IncidentApi{
     @POST("login")
     suspend fun login(@Body credentials: Credentials): Boolean
 
+    @Multipart
     @POST("api/incidents")
-    fun addIncident(@Body incident: Incident): Call<String>
+    suspend fun addIncident(@Part("incident") incident: IncidentDto,
+                            @Part file: MultipartBody.Part): Call<String>
 
     @GET("api/incidents")
     suspend fun getAllIncidents(): List<Incident>
@@ -88,7 +93,7 @@ class IncidentService @Inject constructor(){
 
     suspend fun fetch() {
         _incidentList.value = api.getAllIncidents().map {
-            Incident(it.idInc, it.title, it.description, it.state, it.date, it.userId)
+            Incident(it.idInc, it.title, it.description, it.state, it.date, it.userId, it.file, it.fileType)
         }
     }
 

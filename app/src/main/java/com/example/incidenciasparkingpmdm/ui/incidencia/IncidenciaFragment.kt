@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.incidenciasparkingpmdm.R
 import com.example.incidenciasparkingpmdm.databinding.FragmentIncidenciaBinding
+import com.example.incidenciasparkingpmdm.ui.user.User
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +35,7 @@ class IncidenciaFragment : Fragment() {
         val topAppBar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         val drawerLayout: DrawerLayout = requireActivity().findViewById(R.id.drawerLayout)
         val navigationView: NavigationView = requireActivity().findViewById(R.id.navigation_view)
+        val user = this.requireActivity().intent.getSerializableExtra("user") as? User
         topAppBar.title = getString(R.string.incidents_title)
         topAppBar.setNavigationIcon(R.drawable.ic_launcher_foreground)
         topAppBar.setNavigationOnClickListener {
@@ -53,7 +55,7 @@ class IncidenciaFragment : Fragment() {
         recyclerView.adapter = adapter
 
         binding.addButton.setOnClickListener {
-            val action = IncidenciaFragmentDirections.actionIncidenciaFragmentToCreateInFragment()
+            val action = IncidenciaFragmentDirections.actionIncidenciaFragmentToCreateInFragment(user?.id!!)
             view.findNavController().navigate(action)
         }
 
