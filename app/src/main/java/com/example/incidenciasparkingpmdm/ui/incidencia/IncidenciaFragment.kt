@@ -24,7 +24,6 @@ class IncidenciaFragment : Fragment() {
     @Inject
     lateinit var incidentService: IncidentService
     private val incidentViewModel: IncidentViewModel by activityViewModels()
-    val user: User? = requireActivity().intent.getSerializableExtra("user") as? User
     val list: MutableList<Incident> = mutableListOf()
 
 
@@ -39,6 +38,7 @@ class IncidenciaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
+        val user: User? = requireActivity().intent.getSerializableExtra("user") as? User
         val topAppBar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         val drawerLayout: DrawerLayout = requireActivity().findViewById(R.id.drawerLayout)
         val navigationView: NavigationView = requireActivity().findViewById(R.id.navigation_view)
