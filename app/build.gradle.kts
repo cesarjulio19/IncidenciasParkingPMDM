@@ -83,7 +83,7 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:2.48.1")
     //Gson
     implementation ("com.google.code.gson:gson:2.10.1")
-
+    implementation ("org.apache.tika:tika-core:2.3.0")
 
 }
 kapt {

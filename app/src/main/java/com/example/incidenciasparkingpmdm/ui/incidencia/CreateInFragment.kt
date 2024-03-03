@@ -6,13 +6,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -22,23 +21,21 @@ import com.bumptech.glide.Glide
 import com.example.incidenciasparkingpmdm.R
 import com.example.incidenciasparkingpmdm.api.IncidentService
 import com.example.incidenciasparkingpmdm.databinding.FragmentCreateInBinding
-import com.example.incidenciasparkingpmdm.ui.incidencia.camera.PreviewCameraFragmentDirections
-import com.example.incidenciasparkingpmdm.ui.register.RegisterDirections
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.apache.tika.Tika
+import org.apache.tika.config.TikaConfig
+import org.apache.tika.io.TikaInputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class CreateInFragment : Fragment() {
@@ -107,10 +104,13 @@ class CreateInFragment : Fragment() {
                 // paso la uri a file
                 val file: File? = uriToFile(requireContext(), uri)
 
+                val mimeType = getFileMimeType(file)
+
+
                 // creo el requestBody del file
                 val fileRequestBody = RequestBody.create(
                     MediaType
-                        .parse("multipart/form-data"), file
+                        .parse(mimeType), file
                 )
                 // creo el filePart
                 val filePart = MultipartBody.Part
@@ -169,6 +169,11 @@ class CreateInFragment : Fragment() {
         startForActivityGallery.launch(intent)
     }
 
+    fun getFileMimeType(file: File?): String {
+        val tika = Tika()
+        return tika.detect(file)
+    }
+
     // Uri to File
 
     fun uriToFile(context: Context, uri: Uri): File? {
@@ -211,3 +216,5 @@ class CreateInFragment : Fragment() {
         outputStream.close()
     }
 }
+
+
