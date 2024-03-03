@@ -1,5 +1,7 @@
 package com.example.incidenciasparkingpmdm.api
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.incidenciasparkingpmdm.ui.incidencia.Incident
 import com.example.incidenciasparkingpmdm.ui.incidencia.IncidentDto
 import com.example.incidenciasparkingpmdm.ui.user.User
@@ -36,8 +38,14 @@ interface IncidentApi{
     suspend fun addIncident(@Part("incident") incident: IncidentDto,
                             @Part("file") file:MultipartBody.Part): Call<String>
 
-    @GET("api/{userId}/incidents")
-    suspend fun getIncidentsByUserId(@Path("userId") userId: Int ): Set<Incident>
+   /* @GET("api/{userId}/incidents")
+    suspend fun getIncidentsByUserId(@Path("userId") userId: Int ): Set<Incident>*/
+
+    @GET("api/incidents")
+    suspend fun getAllIncidents(): List<Incident>
+
+    @GET("api/incidents/{idInc}")
+    suspend fun getIncident(@Path("idInc") idInc: Int): Incident
 }
 
 /*class CsrfInterceptor(private val csrfToken: String) : Interceptor {
@@ -55,6 +63,22 @@ interface IncidentApi{
  */
 @Singleton
 class IncidentService @Inject constructor(){
+
+    private val _incidentList = MutableLiveData<List<Incident>>()
+    val incidentList: LiveData<List<Incident>>
+        get() {
+            return _incidentList
+        }
+
+    suspend fun fetch() {
+        _incidentList.value = api.getAllIncidents().map {
+            Incident(it.id, it.title, it.description, it.state, it.date, it.userId)
+        }
+    }
+
+    suspend fun getIncident(id: Int): Incident {
+        return api.getIncident(id)
+    }
     // Cambialo a como tengas la ip de tu pc, luego ya probaremos con la dirección de la api remoto
     private val direccionHttp:String = "http://192.168.1.59:8080/"
     private val retrofit = Retrofit.Builder()

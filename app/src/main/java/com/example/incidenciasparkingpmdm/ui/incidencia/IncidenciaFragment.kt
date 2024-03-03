@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.incidenciasparkingpmdm.R
@@ -23,7 +24,11 @@ class IncidenciaFragment : Fragment() {
     private lateinit var binding: FragmentIncidenciaBinding
     @Inject
     lateinit var incidentService: IncidentService
+    private val incidentViewModel: IncidentViewModel by activityViewModels()
     val user: UserId = arguments?.get("user") as UserId
+    val list: MutableList<Incident> = mutableListOf()
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,6 +38,7 @@ class IncidenciaFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
         val topAppBar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         val drawerLayout: DrawerLayout = requireActivity().findViewById(R.id.drawerLayout)
@@ -47,22 +53,27 @@ class IncidenciaFragment : Fragment() {
             drawerLayout.close()
             true
         }
+        incidentViewModel.fetch()
+        incidentViewModel.incidentList.observe(viewLifecycleOwner){
+            it.forEach(){
+                if(it.userId == user.id){
+                    list.add(it)
+                }
+            }
+        }
 
         binding.addButton.setOnClickListener {
             val action = IncidenciaFragmentDirections.actionIncidenciaFragmentToCreateInFragment(user.id)
             view.findNavController().navigate(action)
         }
 
-        val adapter = IncidentAdapter(requireContext(), ::onShowEdit)
+        val adapter = IncidentAdapter( ::onShowEdit)
         val rv = binding.incidentList
+        adapter.submitList(list)
         rv.adapter = adapter
 
-        lifecycleScope.launch {
-            val set = incidentService.api.getIncidentsByUserId(user.id)
-            val list = set.toList()
 
-            adapter.submitList(list)
-        }
+
 
     }
 

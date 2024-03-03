@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.incidenciasparkingpmdm.databinding.IncidentItemBinding
 
 
-class IncidentAdapter(private val context: Context, private val onShowEdit:(id:Int, v: View)->Unit)
+class IncidentAdapter( private val onShowEdit:(id:Int, v: View)->Unit)
     : RecyclerView.Adapter<IncidentAdapter.IncidentItemViewHolder>() {
 
     private var incidentList: List<Incident> = emptyList()
