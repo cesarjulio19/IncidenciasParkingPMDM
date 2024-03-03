@@ -45,7 +45,7 @@ class CreateInFragment : Fragment() {
     private lateinit var binding: FragmentCreateInBinding
     private val incidentViewModel: IncidentViewModel by activityViewModels()
     private val args : CreateInFragmentArgs by navArgs()
-    private lateinit var uri: Uri
+    private var uri: Uri = Uri.EMPTY
     @Inject
     lateinit var incidentService: IncidentService
     override fun onCreateView(
@@ -73,12 +73,24 @@ class CreateInFragment : Fragment() {
 
         }
 
+
+        incidentViewModel.uri.observe(viewLifecycleOwner) { uri2 ->
+            if (uri2 != null) {
+                Glide.with(this)
+                    .load(uri2)
+                    .into(binding.image)
+
+                uri = uri2
+
+            }
+        }
+
         incidentViewModel.fileCapture.observe(viewLifecycleOwner) { data ->
 
             Glide.with(this)
                 .load(data)
                 .into(binding.image)
-            uri = data.toUri()
+            incidentViewModel.updateUriData(data.toUri())
         }
 
         binding.textButtonGaleria.setOnClickListener {
@@ -90,34 +102,40 @@ class CreateInFragment : Fragment() {
                 binding.titleInputDesc.text.toString(),
                 false,
                 args.id)
-            // paso la uri a file
-            val file: File = uriToFile(requireContext(), uri)
 
-            // creo el requestBody del file
-            val fileRequestBody = RequestBody.create(
-                MediaType
-                    .parse("multipart/form-data"), file
-            )
-            // creo el filePart
-            val filePart = MultipartBody.Part
-                .createFormData("file", file.name, fileRequestBody)
+            if(uri != null) {
+                // paso la uri a file
+                val file: File? = uriToFile(requireContext(), uri)
 
-            lifecycleScope.launch {
-                var call = incidentService.api.addIncident(incidentDto,filePart)
-                call.enqueue(object : Callback<String> {
-                    override fun onResponse(call: Call<String>, response: Response<String>) {
-                        if(!response.isSuccessful) {
-                            Log.e("No esito","no tuvo esito")
+                // creo el requestBody del file
+                val fileRequestBody = RequestBody.create(
+                    MediaType
+                        .parse("multipart/form-data"), file
+                )
+                // creo el filePart
+                val filePart = MultipartBody.Part
+                    .createFormData("file", file?.name, fileRequestBody)
+
+                lifecycleScope.launch {
+                    try {
+                        val call = incidentService.api.addIncident(incidentDto, filePart)
+                        val response = call.execute()
+
+                        if (response.isSuccessful) {
+                            val action = CreateInFragmentDirections.actionCreateInFragmentToIncidenciaFragment()
+                            findNavController().navigate(action)
+                        } else {
+
+                            Log.e("No éxito", "no tuvo éxito")
                         }
-                        response.body()
+                    } catch (e: Exception) {
+
+                        Log.e("Error", "Error en la llamada: ${e.message}", e)
                     }
 
-                    override fun onFailure(call: Call<String>, t: Throwable) {
-                        Log.e("Fallo","Fallo")
-                    }
-                })
-                val action = RegisterDirections.actionRegisterToLogin()
-                findNavController().navigate(action)
+                }
+            } else {
+                Log.e("Error", "La Uri es nula")
             }
 
 
@@ -138,7 +156,7 @@ class CreateInFragment : Fragment() {
                 .load(data)
                 .into(binding.image)
             if (data != null) {
-                uri = data
+                incidentViewModel.updateUriData(data)
             }
 
         }
@@ -153,9 +171,9 @@ class CreateInFragment : Fragment() {
 
     // Uri to File
 
-    fun uriToFile(context: Context, uri: Uri): File {
+    fun uriToFile(context: Context, uri: Uri): File? {
         var inputStream: InputStream? = null
-        var file = File("")
+        var file : File? = null
         try {
             inputStream = context.contentResolver.openInputStream(uri)
             if (inputStream != null) {
