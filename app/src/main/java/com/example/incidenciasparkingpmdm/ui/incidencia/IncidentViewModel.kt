@@ -32,6 +32,10 @@ class IncidentViewModel @Inject constructor(private val service: IncidentService
 
     val uri: MutableLiveData<Uri> get() = _uri
 
+    private val _uriEdit = MutableLiveData<Uri>()
+
+    val uriEdit: MutableLiveData<Uri> get() = _uriEdit
+
     private val _incident = MutableLiveData<Incident>()
     val incident: LiveData<Incident>
         get() {
@@ -44,6 +48,10 @@ class IncidentViewModel @Inject constructor(private val service: IncidentService
 
     fun updateUriData(data: Uri){
         _uri.value = data
+    }
+
+    fun updateUriEditData(data: Uri){
+        _uriEdit.value = data
     }
 
     init {
