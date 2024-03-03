@@ -20,6 +20,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
 import javax.inject.Inject
@@ -44,6 +45,12 @@ interface IncidentApi{
     @POST("api/incidents")
     suspend fun addIncident(@Part("incident") incident: IncidentDto,
                             @Part file: MultipartBody.Part): Call<String>
+
+    @Multipart
+    @PUT("api/incidents/{idInc}")
+    suspend fun updateIncident(@Path("idInc") idInc: Int,
+                               @Part("incident") incident: IncidentDto,
+                               @Part file: MultipartBody.Part): Call<String>
 
     @GET("api/incidents")
     suspend fun getAllIncidents(): List<Incident>

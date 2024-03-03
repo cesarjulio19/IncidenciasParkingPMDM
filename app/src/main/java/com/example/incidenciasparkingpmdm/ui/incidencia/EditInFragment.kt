@@ -117,8 +117,8 @@ class EditInFragment : Fragment() {
 
                 lifecycleScope.launch {
                     try {
-                        /*val call = incidentService.api.addIncident(incidentDto, filePart)*/
-                        /*val response = call.execute()*/
+                        val call = incidentService.api.updateIncident(args.id,incidentDto,filePart)
+                        val response = call.execute()
                     } catch (e: Exception) {
 
                         Log.e("Error", "Error en la llamada: ${e.message}", e)
