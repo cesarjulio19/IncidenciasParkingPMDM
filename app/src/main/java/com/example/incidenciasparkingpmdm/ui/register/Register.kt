@@ -14,7 +14,9 @@ import com.example.incidenciasparkingpmdm.api.IncidentService
 import com.example.incidenciasparkingpmdm.databinding.FragmentRegisterBinding
 import com.example.incidenciasparkingpmdm.ui.user.User
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -22,6 +24,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.io.IOException
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -97,6 +100,36 @@ class Register : Fragment() {
                   .createFormData("file", file.name, fileRequestBody)
 
                 lifecycleScope.launch {
+                    try {
+                        val csrfToken = incidentService.apiSinToken.getCsrfToken().execute().body()?.token
+                        incidentService.updateCsrfToken(csrfToken ?: "")
+
+                        // Realizar el registro en segundo plano
+                        withContext(Dispatchers.IO) {
+                            val call = incidentService.api.addNewUser(user)
+                            call.enqueue(object : Callback<String> {
+                                override fun onResponse(call: Call<String>, response: Response<String>) {
+                                    if(!response.isSuccessful) {
+                                        Log.e("No esito","no tuvo esito")
+                                    } else {
+                                        Log.e("Esito", "tuvo esito")
+                                    }
+                                    response.body()
+                                }
+
+                                override fun onFailure(call: Call<String>, t: Throwable) {
+                                    Log.e("Fallo","Fallo")
+                                }
+                            })
+                        }
+
+                        val action = RegisterDirections.actionRegisterToLogin()
+                        findNavController().navigate(action)
+                    } catch (e: Exception) {
+                        Log.e("Excepción", e.message.toString())
+                    }
+                    /*val csrfToken = incidentService.apiSinToken.getCsrfToken().execute().body()?.token
+                    incidentService.updateCsrfToken(csrfToken ?: "")
                     var call = incidentService.api.addNewUser(user)
                     call.enqueue(object : Callback<String> {
                         override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -112,6 +145,8 @@ class Register : Fragment() {
                             Log.e("Fallo","Fallo")
                         }
                     })
+                    val action = RegisterDirections.actionRegisterToLogin()
+                    findNavController().navigate(action)*/
                     val action = RegisterDirections.actionRegisterToLogin()
                     findNavController().navigate(action)
                 }

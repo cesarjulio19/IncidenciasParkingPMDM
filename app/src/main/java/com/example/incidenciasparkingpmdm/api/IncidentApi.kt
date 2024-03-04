@@ -117,7 +117,7 @@ class IncidentService @Inject constructor() {
     }
 
     // Cambialo a como tengas la ip de tu pc, luego ya probaremos con la dirección de la api remoto
-    private val direccionHttp:String = "http://192.168.42.213:8080/"
+    private val direccionHttp:String = "http://192.168.1.42:8080/"
     private val retrofit = Retrofit.Builder()
         .baseUrl(direccionHttp)
         .addConverterFactory(GsonConverterFactory.create())
@@ -151,8 +151,13 @@ class IncidentService @Inject constructor() {
         return Credentials.basic(email, password)
     }
     private fun buildRetrofitApi() {
-        val retrofit = retrofitBuilder.build()
-        api = retrofit.create(IncidentApi::class.java)
+        val retrofit = retrofitBuilder?.build()
+        if (retrofit != null) {
+            api = retrofit.create(IncidentApi::class.java)
+        } else {
+
+            Log.e("Error", "retrofitBuilder es nulo al construir Retrofit")
+        }
     }
 
     fun updateCsrfToken(token: String) {
