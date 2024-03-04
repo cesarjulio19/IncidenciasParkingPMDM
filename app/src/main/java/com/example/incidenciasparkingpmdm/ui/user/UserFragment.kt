@@ -29,7 +29,7 @@ class UserFragment : Fragment() {
             binding.userName.text = "${user.name} ${user.surname}"
             binding.userSchoolYear.text = user.schoolYear
             binding.editProfile.setOnClickListener {
-                val action = UserFragmentDirections.actionUserFragmentToEditUserFragment(user.email)
+                val action = UserFragmentDirections.actionUserFragmentToEditUserFragment()
                 findNavController().navigate(action)
             }
         }

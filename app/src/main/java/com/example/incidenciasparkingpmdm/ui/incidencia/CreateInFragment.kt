@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide
 import com.example.incidenciasparkingpmdm.R
 import com.example.incidenciasparkingpmdm.api.IncidentService
 import com.example.incidenciasparkingpmdm.databinding.FragmentCreateInBinding
+import com.example.incidenciasparkingpmdm.ui.user.User
 import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -90,6 +91,7 @@ class CreateInFragment : Fragment() {
         }
 
         binding.filledButtonCreate.setOnClickListener {
+            val user = requireActivity().intent.getSerializableExtra("user") as? User
             val incidentDto = IncidentDto(binding.titleInputTitulo.text.toString(),
                 binding.titleInputDesc.text.toString(),
                 false,
@@ -109,7 +111,8 @@ class CreateInFragment : Fragment() {
 
                 lifecycleScope.launch {
                     try {
-                        val call = incidentService.api.addIncident(incidentDto, filePart)
+                        val header = incidentService.getHeader(user?.email.toString(), user?.password.toString())
+                        val call = incidentService.api.addIncident(header, incidentDto, filePart)
                         val response = call.execute()
                     } catch (e: Exception) {
 

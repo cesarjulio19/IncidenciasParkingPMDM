@@ -5,25 +5,26 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.incidenciasparkingpmdm.R
-import com.example.incidenciasparkingpmdm.databinding.FragmentEditInBinding
-import com.google.android.material.appbar.MaterialToolbar
-import android.util.Base64
-import android.util.Log
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toUri
-import androidx.lifecycle.lifecycleScope
 import com.example.incidenciasparkingpmdm.api.IncidentService
+import com.example.incidenciasparkingpmdm.databinding.FragmentEditInBinding
+import com.example.incidenciasparkingpmdm.ui.user.User
+import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
@@ -62,6 +63,7 @@ class EditInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val user = requireActivity().intent.getSerializableExtra("user") as? User
         val topAppBar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         topAppBar.title = getString(R.string.edit_inc_title)
         topAppBar.setNavigationIcon(R.drawable.ic_arrow_back)
@@ -94,7 +96,7 @@ class EditInFragment : Fragment() {
 
             incidentViewModel.updateUriEditData(data.toUri())
         }
-        incidentViewModel.fetchIncident(args.id)
+        incidentViewModel.fetchIncident(user?.email.toString(), user?.password.toString(), args.id)
         incidentViewModel.incident.observe(viewLifecycleOwner,observer)
 
         binding.filledButtonEdit.setOnClickListener {
@@ -114,7 +116,8 @@ class EditInFragment : Fragment() {
 
                 lifecycleScope.launch {
                     try {
-                        val call = incidentService.api.updateIncident(args.id,incidentDto,filePart)
+                        val header = incidentService.getHeader(user?.email.toString(), user?.password.toString())
+                        val call = incidentService.api.updateIncident(header, args.id,incidentDto,filePart)
                         val response = call.execute()
                     } catch (e: Exception) {
 

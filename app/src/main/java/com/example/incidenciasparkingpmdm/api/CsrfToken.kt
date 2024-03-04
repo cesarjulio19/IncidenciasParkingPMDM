@@ -3,5 +3,5 @@ package com.example.incidenciasparkingpmdm.api
 estructura que devolvia
  */
 data class CsrfToken(
-    val x_csrf_token: String
+    val token: String
 )

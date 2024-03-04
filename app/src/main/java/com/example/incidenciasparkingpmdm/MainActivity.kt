@@ -1,7 +1,6 @@
 package com.example.incidenciasparkingpmdm
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -57,9 +56,5 @@ class MainActivity : AppCompatActivity() {
             }
             navView.setupWithNavController(navController)
         }
-    }
-
-    fun onEditProfile(view: View){
-        navController.navigate(R.id.editUserFragment)
     }
 }

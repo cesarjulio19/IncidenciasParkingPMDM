@@ -17,9 +17,5 @@
     <fragment
         android:id="@+id/editUserFragment"
         android:name="com.example.incidenciasparkingpmdm.ui.user.EditUserFragment"
-        android:label="EditUserFragment" >
-        <argument
-            android:name="user"
-            app:argType="string" />
-    </fragment>
+        android:label="EditUserFragment" />
 </navigation>

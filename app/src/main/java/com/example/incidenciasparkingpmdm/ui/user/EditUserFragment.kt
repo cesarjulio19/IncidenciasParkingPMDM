@@ -10,7 +10,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.incidenciasparkingpmdm.R
 import com.example.incidenciasparkingpmdm.api.IncidentService
@@ -23,7 +22,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class EditUserFragment : Fragment() {
     private lateinit var binding: FragmentEditUserBinding
-    private val args: EditUserFragmentArgs by navArgs()
     @Inject
     lateinit var service: IncidentService
 
@@ -44,11 +42,11 @@ class EditUserFragment : Fragment() {
             findNavController().popBackStack()
         }
         lifecycleScope.launch {
-            val user = service.api.getUserByEmail(args.user)
+            val user = requireActivity().intent.getSerializableExtra("user") as? User
             binding.name.text = "${user?.name} ${user?.surname}"
-            binding.titleInputCpostal.setText(user.postalCode.toString())
-            binding.titleInputDirec.setText(user.address)
-            binding.autoComplete.setText(user.schoolYear)
+            binding.titleInputCpostal.setText(user?.postalCode.toString())
+            binding.titleInputDirec.setText(user?.address)
+            binding.autoComplete.setText(user?.schoolYear)
             binding.textButtonEditPhoto.setOnClickListener {
                 pickPhotoFromGallery()
             }

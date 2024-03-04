@@ -39,7 +39,7 @@ class IncidenciaFragment : Fragment() {
         val user: User? = requireActivity().intent.getSerializableExtra("user") as? User
         val topAppBar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         topAppBar.title = getString(R.string.incidents_title)
-        incidentViewModel.fetch()
+        incidentViewModel.fetch(user?.email.toString(), user?.password.toString())
         incidentViewModel.incidentList.observe(viewLifecycleOwner){
             it.forEach(){
                 if(it.userId == user?.id){
@@ -68,4 +68,5 @@ class IncidenciaFragment : Fragment() {
             .actionIncidenciaFragmentToEditInFragment(incident.idInc!!)
         findNavController().navigate(action)
     }
+
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.incidenciasparkingpmdm.api.IncidentService
+import com.example.incidenciasparkingpmdm.ui.user.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.File
@@ -14,6 +15,12 @@ import javax.inject.Inject
 @HiltViewModel
 class IncidentViewModel @Inject constructor(private val service: IncidentService): ViewModel() {
     private val _incidentList = MutableLiveData<List<Incident>>()
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User>
+        get() = _user
+    private val userObserver = Observer<User> {
+        _user.value = it
+    }
     val incidentList: LiveData<List<Incident>>
         get() {
             return _incidentList
@@ -55,19 +62,22 @@ class IncidentViewModel @Inject constructor(private val service: IncidentService
     }
 
     init {
-        fetch()
+        _user.observeForever(userObserver)
+       viewModelScope.launch {
+           fetch(_user.value?.email.toString(), _user.value?.password.toString())
+       }
     }
 
-    fun fetch() {
+    fun fetch(email: String, password: String) {
         service.incidentList.observeForever(observer)
         viewModelScope.launch {
-            service.fetch()
+            service.fetch(email, password)
         }
     }
 
-    fun fetchIncident(id:Int) {
+    fun fetchIncident(email: String, password: String, id:Int) {
         viewModelScope.launch {
-            _incident.value = service.getIncident(id)
+            _incident.value = service.getIncident(email, password, id)
         }
     }
 

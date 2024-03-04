@@ -1,6 +1,5 @@
 package com.example.incidenciasparkingpmdm.api
 
-import android.util.Base64
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,8 +9,8 @@ import com.example.incidenciasparkingpmdm.ui.parking.ParkingRequest
 import com.example.incidenciasparkingpmdm.ui.parking.ParkingRequestDto
 import com.example.incidenciasparkingpmdm.ui.parking.Vehicle
 import com.example.incidenciasparkingpmdm.ui.parking.VehicleDto
-import com.example.incidenciasparkingpmdm.ui.user.Credentials
 import com.example.incidenciasparkingpmdm.ui.user.User
+import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -28,6 +27,7 @@ import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Singleton
 // Interfaz para los endPoint
 interface IncidentApi{
@@ -37,30 +37,30 @@ interface IncidentApi{
         //@Part file: MultipartBody.Part?
     ): Call<String>
     @GET("csrf")
-    suspend fun getCsrfToken(): CsrfToken
+    fun getCsrfToken(): Call<CsrfToken>
 
     @GET("api/users/{email}")
-    suspend fun getUserByEmail(@Path("email") email: String): User
+    suspend fun getUserByEmail(@Header("Authorization") authHeader: String, @Path("email") email: String): User
 
-    @GET("login")
-    suspend fun login(@Header("Authorization") authHeader: String): Boolean
+    @POST("login")
+    suspend fun login(/*@Header("Authorization") authHeader: String*/@Body credentials: com.example.incidenciasparkingpmdm.ui.user.Credentials): Boolean
 
     @Multipart
     @POST("api/incidents")
-    suspend fun addIncident(@Part("incident") incident: IncidentDto,
+    suspend fun addIncident(@Header("Authorization") authHeader: String, @Part("incident") incident: IncidentDto,
                             @Part file: MultipartBody.Part): Call<String>
 
     @Multipart
     @PUT("api/incidents/{idInc}")
-    suspend fun updateIncident(@Path("idInc") idInc: Int,
+    suspend fun updateIncident(@Header("Authorization") authHeader: String,@Path("idInc") idInc: Int,
                                @Part("incident") incident: IncidentDto,
                                @Part file: MultipartBody.Part): Call<String>
 
     @GET("api/incidents")
-    suspend fun getAllIncidents(): List<Incident>
+    suspend fun getAllIncidents(@Header("Authorization") authHeader: String): List<Incident>
 
     @GET("api/incidents/{idInc}")
-    suspend fun getIncident(@Path("idInc") idInc: Int): Incident
+    suspend fun getIncident(@Header("Authorization") authHeader: String,@Path("idInc") idInc: Int): Incident
 
     @POST("api/vehicles")
     fun addVehicle(@Body vehicle: VehicleDto): Call<String>
@@ -84,45 +84,52 @@ interface IncidentApi{
 class CsrfInterceptor(private val csrfToken: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val originalRequest = chain.request()
+        Log.d("TOKEN", csrfToken)
         val requestWithCsrf = originalRequest.newBuilder()
             .header("X-CSRF-TOKEN", csrfToken)
             .build()
         return chain.proceed(requestWithCsrf)
     }
 }
+
 /* Clase Singleton para el IncidentService, donde obtienes el api ya construido con retrofit
    y tambien esta comentado otro apiCsrf para cuando se necesite realizar acciones con el token en
    la cabecera(No se si esta bien echo, el código con el csrf esta comentado)
  */
 @Singleton
-class IncidentService @Inject constructor(){
+class IncidentService @Inject constructor(@Named("token") csrfToken: String) {
     private val _incidentList = MutableLiveData<List<Incident>>()
     val incidentList: LiveData<List<Incident>>
         get() {
             return _incidentList
         }
 
-    suspend fun fetch() {
-        _incidentList.value = api.getAllIncidents().map {
+    suspend fun fetch(email: String, password: String) {
+        val header = getHeader(email, password)
+        _incidentList.value = api.getAllIncidents(header).map {
             Incident(it.idInc, it.title, it.description, it.state, it.date, it.userId, it.file, it.fileType)
         }
     }
 
-    suspend fun getIncident(id: Int): Incident {
-        return api.getIncident(id)
+    suspend fun getIncident(email:String, password: String, id: Int): Incident {
+        val header = getHeader(email, password)
+        return api.getIncident(header, id)
     }
 
     // Cambialo a como tengas la ip de tu pc, luego ya probaremos con la dirección de la api remoto
-    private val direccionHttp:String = "http://192.168.1.59:8080/"
-    /*private val retrofit = Retrofit.Builder()
+    private val direccionHttp:String = "http://192.168.42.213:8080/"
+    private val retrofit = Retrofit.Builder()
         .baseUrl(direccionHttp)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val api:IncidentApi = retrofit.create(IncidentApi::class.java)*/
-    var csrfToken:CsrfToken = CsrfToken("")
-    val interceptor = CsrfInterceptor(csrfToken.x_csrf_token)
+    val apiSinToken:IncidentApi = retrofit.create(IncidentApi::class.java)
 
+    private val interceptor = CsrfInterceptor(csrfToken)
+
+    init {
+
+    }
     private val retrofitCsrf = Retrofit.Builder()
         .baseUrl(direccionHttp)
         .addConverterFactory(GsonConverterFactory.create())
@@ -135,20 +142,7 @@ class IncidentService @Inject constructor(){
 
     val api:IncidentApi = retrofitCsrf.create(IncidentApi::class.java)
 
-     suspend fun getCsrf(username: String, password: String): CsrfToken?{
-        val credentials = "$username:$password"
-        val authHeader = "Basic " + Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
-
-        try {
-            csrfToken = api.getCsrfToken()
-            return csrfToken
-        } catch (e: Exception) {
-            Log.e("Error", "${e.toString()}")
-        }
-        return csrfToken
-     }
-
-    suspend fun login(credentials: Credentials):Boolean {
+    /*suspend fun login(credentials: Credentials):Boolean {
         val concatCredentials = "${credentials.email}:${credentials.password}"
         val authHeader = "Basic "+ Base64.encodeToString(concatCredentials.toByteArray(), Base64.NO_WRAP)
         return try {
@@ -157,5 +151,8 @@ class IncidentService @Inject constructor(){
             Log.e("ERROR", e.message.toString())
             return false;
         }
+    }*/
+    fun getHeader(email: String, password:String):String {
+        return Credentials.basic(email, password)
     }
 }
