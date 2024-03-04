@@ -5,4 +5,5 @@
     app:startDestination="@id/incidents_nav">
     <include app:graph="@navigation/incidents_nav"/>
     <include app:graph="@navigation/parking_nav"/>
+    <include app:graph="@navigation/user_nav" />
 </navigation>

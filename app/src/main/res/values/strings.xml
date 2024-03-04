@@ -23,4 +23,6 @@
     <string name="brand_model">Brand and Model</string>
     <string name="licensePlate">License plate</string>
     <string name="take_photo">CAMERA</string>
+    <string name="profile">PROFILE</string>
+    <string name="edit_profile_title">EDIT PROFILE</string>
 </resources>

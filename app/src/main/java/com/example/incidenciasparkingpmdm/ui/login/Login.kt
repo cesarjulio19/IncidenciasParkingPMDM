@@ -40,7 +40,7 @@ class Login : Fragment() {
             val intent = Intent(this.activity, MainActivity::class.java)
             lifecycleScope.launch {
                 val credentials = Credentials(binding.emailInput.editText?.text.toString(), binding.passwordInput.editText?.text.toString())
-                val isLogged = service.api.login(credentials)
+                val isLogged = service.login(credentials)
                 if (isLogged) {
                     val callUser = service.api.getUserByEmail(credentials.email);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
