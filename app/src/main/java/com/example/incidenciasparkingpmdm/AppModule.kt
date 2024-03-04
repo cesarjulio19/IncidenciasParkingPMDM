@@ -19,15 +19,22 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideIncidentService(): IncidentService {
-        return IncidentService(getToken())
+     fun provideIncidentService(): IncidentService {
+        return IncidentService()
     }
 
-    @Provides
+   /* @Provides
     @Singleton
     @Named("token")
-    fun getToken(): String {
-        var token = ""
+     fun getToken(): String {
+        return try {
+            val response = provideIncidentServiceWithoutToken().apiSinToken.getCsrfToken().execute()
+            response.body()?.token ?: ""
+        } catch (e: IOException) {
+            Log.e("ERROR", e.message.toString())
+            ""
+        }
+        /*var token = ""
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 val response = provideIncidentService().apiSinToken.getCsrfToken().execute()
@@ -36,6 +43,12 @@ object AppModule {
                 Log.e("ERROR", e.message.toString())
             }
         }
-        return token
+        return token*/
     }
+
+    @Provides
+    @Singleton
+    fun provideIncidentServiceWithoutToken(): IncidentService {
+        return IncidentService("")
+    }*/
 }

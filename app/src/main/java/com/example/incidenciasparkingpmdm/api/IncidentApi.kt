@@ -97,7 +97,7 @@ class CsrfInterceptor(private val csrfToken: String) : Interceptor {
    la cabecera(No se si esta bien echo, el código con el csrf esta comentado)
  */
 @Singleton
-class IncidentService @Inject constructor(@Named("token") csrfToken: String) {
+class IncidentService @Inject constructor() {
     private val _incidentList = MutableLiveData<List<Incident>>()
     val incidentList: LiveData<List<Incident>>
         get() {
@@ -106,14 +106,14 @@ class IncidentService @Inject constructor(@Named("token") csrfToken: String) {
 
     suspend fun fetch(email: String, password: String) {
         val header = getHeader(email, password)
-        _incidentList.value = api.getAllIncidents(header).map {
+        _incidentList.value = apiSinToken.getAllIncidents(header).map {
             Incident(it.idInc, it.title, it.description, it.state, it.date, it.userId, it.file, it.fileType)
         }
     }
 
     suspend fun getIncident(email:String, password: String, id: Int): Incident {
         val header = getHeader(email, password)
-        return api.getIncident(header, id)
+        return apiSinToken.getIncident(header, id)
     }
 
     // Cambialo a como tengas la ip de tu pc, luego ya probaremos con la dirección de la api remoto
@@ -125,22 +125,13 @@ class IncidentService @Inject constructor(@Named("token") csrfToken: String) {
 
     val apiSinToken:IncidentApi = retrofit.create(IncidentApi::class.java)
 
-    private val interceptor = CsrfInterceptor(csrfToken)
+    lateinit var api: IncidentApi
+        private set
 
     init {
+        buildRetrofitApi()
 
     }
-    private val retrofitCsrf = Retrofit.Builder()
-        .baseUrl(direccionHttp)
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(
-            OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .build()
-        )
-        .build()
-
-    val api:IncidentApi = retrofitCsrf.create(IncidentApi::class.java)
 
     /*suspend fun login(credentials: Credentials):Boolean {
         val concatCredentials = "${credentials.email}:${credentials.password}"
@@ -152,7 +143,27 @@ class IncidentService @Inject constructor(@Named("token") csrfToken: String) {
             return false;
         }
     }*/
+
+    private val retrofitBuilder = Retrofit.Builder()
+        .baseUrl(direccionHttp)
+        .addConverterFactory(GsonConverterFactory.create())
     fun getHeader(email: String, password:String):String {
         return Credentials.basic(email, password)
     }
+    private fun buildRetrofitApi() {
+        val retrofit = retrofitBuilder.build()
+        api = retrofit.create(IncidentApi::class.java)
+    }
+
+    fun updateCsrfToken(token: String) {
+        val interceptor = CsrfInterceptor(token)
+        val retrofitCsrf = retrofitBuilder.client(
+            OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build()
+        ).build()
+
+        api = retrofitCsrf.create(IncidentApi::class.java)
+    }
+
 }

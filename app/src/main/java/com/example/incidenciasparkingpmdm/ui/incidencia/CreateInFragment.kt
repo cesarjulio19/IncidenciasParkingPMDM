@@ -112,6 +112,8 @@ class CreateInFragment : Fragment() {
                 lifecycleScope.launch {
                     try {
                         val header = incidentService.getHeader(user?.email.toString(), user?.password.toString())
+                        val csrfToken = incidentService.apiSinToken.getCsrfToken().execute().body()?.token
+                        incidentService.updateCsrfToken(csrfToken ?: "")
                         val call = incidentService.api.addIncident(header, incidentDto, filePart)
                         val response = call.execute()
                     } catch (e: Exception) {
