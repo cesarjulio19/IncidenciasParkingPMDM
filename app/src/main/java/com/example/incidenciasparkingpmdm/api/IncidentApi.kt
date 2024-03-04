@@ -1,5 +1,7 @@
 package com.example.incidenciasparkingpmdm.api
 
+import android.util.Base64
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.incidenciasparkingpmdm.ui.incidencia.Incident
@@ -10,7 +12,9 @@ import com.example.incidenciasparkingpmdm.ui.parking.Vehicle
 import com.example.incidenciasparkingpmdm.ui.parking.VehicleDto
 import com.example.incidenciasparkingpmdm.ui.user.Credentials
 import com.example.incidenciasparkingpmdm.ui.user.User
+import okhttp3.Interceptor
 import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -32,13 +36,13 @@ interface IncidentApi{
         //@Part file: MultipartBody.Part?
     ): Call<String>
     @GET("csrf")
-    suspend fun getCsrfToken(@Header("Authorization") authHeader: String): CsrfToken
+    suspend fun getCsrfToken(): CsrfToken
 
     @GET("api/users/{email}")
     suspend fun getUserByEmail(@Path("email") email: String): User
 
-    @POST("login")
-    suspend fun login(@Body credentials: Credentials): Boolean
+    @GET("login")
+    suspend fun login(@Header("Authorization") authHeader: String): Boolean
 
     @Multipart
     @POST("api/incidents")
@@ -70,7 +74,7 @@ interface IncidentApi{
     fun deleteVehicle(@Path("idV") idV: Int): Call<String>
 }
 
-/*class CsrfInterceptor(private val csrfToken: String) : Interceptor {
+class CsrfInterceptor(private val csrfToken: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val originalRequest = chain.request()
         val requestWithCsrf = originalRequest.newBuilder()
@@ -78,7 +82,7 @@ interface IncidentApi{
             .build()
         return chain.proceed(requestWithCsrf)
     }
-}*/
+}
 /* Clase Singleton para el IncidentService, donde obtienes el api ya construido con retrofit
    y tambien esta comentado otro apiCsrf para cuando se necesite realizar acciones con el token en
    la cabecera(No se si esta bien echo, el código con el csrf esta comentado)
@@ -103,17 +107,17 @@ class IncidentService @Inject constructor(){
 
     // Cambialo a como tengas la ip de tu pc, luego ya probaremos con la dirección de la api remoto
     private val direccionHttp:String = "http://192.168.1.59:8080/"
-    private val retrofit = Retrofit.Builder()
+    /*private val retrofit = Retrofit.Builder()
         .baseUrl(direccionHttp)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val api:IncidentApi = retrofit.create(IncidentApi::class.java)
-    /*var csrfToken:CsrfToken = CsrfToken("")
+    val api:IncidentApi = retrofit.create(IncidentApi::class.java)*/
+    var csrfToken:CsrfToken = CsrfToken("")
     val interceptor = CsrfInterceptor(csrfToken.x_csrf_token)
 
     private val retrofitCsrf = Retrofit.Builder()
-        .baseUrl("http://localhost:8080")
+        .baseUrl(direccionHttp)
         .addConverterFactory(GsonConverterFactory.create())
         .client(
             OkHttpClient.Builder()
@@ -122,18 +126,29 @@ class IncidentService @Inject constructor(){
         )
         .build()
 
-    val apicsrf:IncidentApi = retrofitCsrf.create(IncidentApi::class.java)
+    val api:IncidentApi = retrofitCsrf.create(IncidentApi::class.java)
 
      suspend fun getCsrf(username: String, password: String): CsrfToken?{
         val credentials = "$username:$password"
         val authHeader = "Basic " + Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
 
         try {
-            csrfToken = api.getCsrfToken(authHeader)
+            csrfToken = api.getCsrfToken()
             return csrfToken
         } catch (e: Exception) {
             Log.e("Error", "${e.toString()}")
         }
         return csrfToken
-     }*/
+     }
+
+    suspend fun login(credentials: Credentials):Boolean {
+        val concatCredentials = "${credentials.email}:${credentials.password}"
+        val authHeader = "Basic "+ Base64.encodeToString(concatCredentials.toByteArray(), Base64.NO_WRAP)
+        return try {
+            api.login(authHeader)
+        } catch (e: Exception) {
+            Log.e("ERROR", e.message.toString())
+            return false;
+        }
+    }
 }

@@ -50,8 +50,4 @@
             android:name="id"
             app:argType="integer" />
     </fragment>
-    <fragment
-        android:id="@+id/editUserFragment"
-        android:name="com.example.incidenciasparkingpmdm.ui.user.EditUserFragment"
-        android:label="EditUserFragment" />
 </navigation>
