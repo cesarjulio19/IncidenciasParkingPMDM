@@ -92,9 +92,6 @@ class EditInFragment : Fragment() {
 
         incidentViewModel.fileCapture.observe(viewLifecycleOwner) { data ->
 
-            Glide.with(this)
-                .load(data)
-                .into(binding.image)
             incidentViewModel.updateUriEditData(data.toUri())
         }
         incidentViewModel.fetchIncident(args.id)
@@ -159,9 +156,6 @@ class EditInFragment : Fragment() {
         if(result.resultCode == Activity.RESULT_OK){
             val data = result.data?.data
 
-            Glide.with(this)
-                .load(data)
-                .into(binding.image)
             if (data != null) {
                 incidentViewModel.updateUriEditData(data)
             }
