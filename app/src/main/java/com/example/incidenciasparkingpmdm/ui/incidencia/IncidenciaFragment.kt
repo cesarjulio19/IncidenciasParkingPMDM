@@ -39,24 +39,23 @@ class IncidenciaFragment : Fragment() {
         val user: User? = requireActivity().intent.getSerializableExtra("user") as? User
         val topAppBar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         topAppBar.title = getString(R.string.incidents_title)
+        val adapter = IncidentAdapter( ::onShowEdit)
+        val rv = binding.incidentList
         incidentViewModel.fetch(user?.email.toString(), user?.password.toString())
-        incidentViewModel.incidentList.observe(viewLifecycleOwner){
-            it.forEach(){
-                if(it.userId == user?.id){
-                    list.add(it)
-                }
-            }
+        incidentViewModel.incidentList.observe(viewLifecycleOwner){newList->
+            list.clear()
+            list.addAll(newList.filter { it.userId == user?.id })
+            adapter.submitList(list)
+            adapter.notifyDataSetChanged()
+            rv.adapter = adapter
         }
+
 
         binding.addButton.setOnClickListener {
             val action = IncidenciaFragmentDirections.actionIncidenciaFragmentToCreateInFragment(user?.id!!)
             view.findNavController().navigate(action)
         }
 
-        val adapter = IncidentAdapter( ::onShowEdit)
-        val rv = binding.incidentList
-        adapter.submitList(list)
-        rv.adapter = adapter
 
 
 
