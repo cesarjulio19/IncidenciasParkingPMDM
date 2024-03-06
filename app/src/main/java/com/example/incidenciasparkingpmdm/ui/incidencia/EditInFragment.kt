@@ -131,7 +131,7 @@ class EditInFragment : Fragment() {
         }
 
         binding.filledButtonDelete.setOnClickListener {
-            val deleteInc = incidentService.apiSinToken.deleteIncident(args.id)
+            val deleteInc = incidentViewModel.deleteIncident(args.id)
 
             deleteInc.enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>, response: Response<String>) {
