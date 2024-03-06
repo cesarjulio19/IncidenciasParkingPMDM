@@ -129,7 +129,7 @@ class PreviewCameraFragment : Fragment() {
         val photoFile = File(
             outputDirectory,
             SimpleDateFormat("yy-MM-dd-HH-mm-ss-SSS", Locale.getDefault())
-                .format(System.currentTimeMillis()) +".jpg")
+                .format(System.currentTimeMillis()) +".jpeg")
 
 
         val outputOption = ImageCapture.OutputFileOptions.Builder(photoFile).build()

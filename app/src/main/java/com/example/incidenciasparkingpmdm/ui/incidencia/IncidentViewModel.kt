@@ -10,8 +10,11 @@ import com.example.incidenciasparkingpmdm.api.IncidentService
 import com.example.incidenciasparkingpmdm.ui.user.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody.Part
+import retrofit2.Call
 import java.io.File
 import javax.inject.Inject
+
 @HiltViewModel
 class IncidentViewModel @Inject constructor(private val service: IncidentService): ViewModel() {
     private val _incidentList = MutableLiveData<List<Incident>>()
@@ -27,7 +30,7 @@ class IncidentViewModel @Inject constructor(private val service: IncidentService
         }
     private val observer = Observer<List<Incident>> {
         val list = it.map {
-            Incident(it.idInc, it.title, it.description, it.state, it.date, it.userId, it.file, it.fileType)
+            Incident(it.idInc, it.title, it.description, it.state, it.date, it.user, it.file, it.fileType)
         }
 
         _incidentList.value = list
@@ -63,22 +66,30 @@ class IncidentViewModel @Inject constructor(private val service: IncidentService
 
     init {
         _user.observeForever(userObserver)
-       viewModelScope.launch {
-           fetch(_user.value?.email.toString(), _user.value?.password.toString())
-       }
+       fetch()
     }
 
-    fun fetch(email: String, password: String) {
+    fun fetch() {
         service.incidentList.observeForever(observer)
         viewModelScope.launch {
-            service.fetch(email, password)
+            service.fetchIncidents()
         }
     }
 
-    fun fetchIncident(email: String, password: String, id:Int) {
+    fun fetchIncident(id:Int) {
         viewModelScope.launch {
-            _incident.value = service.getIncident(email, password, id)
+            _incident.value = service.getIncident(id)
         }
     }
+    suspend fun createIncident(dto: IncidentDto, filePart: Part): Call<String> {
+        return service.api.addIncident(dto, filePart)
+    }
 
+    suspend fun updateIncident(id: Int, dto: IncidentDto, filePart: Part): Call<String> {
+        return service.api.updateIncident(id, dto, filePart)
+    }
+
+    fun deleteIncident(id: Int):Call<String> {
+        return service.api.deleteIncident(id)
+    }
 }

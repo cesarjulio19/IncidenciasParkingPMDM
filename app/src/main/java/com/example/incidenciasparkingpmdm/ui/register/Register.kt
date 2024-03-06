@@ -8,11 +8,12 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.incidenciasparkingpmdm.api.IncidentService
 import com.example.incidenciasparkingpmdm.databinding.FragmentRegisterBinding
 import com.example.incidenciasparkingpmdm.ui.user.User
+import com.example.incidenciasparkingpmdm.ui.user.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
@@ -22,14 +23,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class Register : Fragment() {
+class Register: Fragment() {
     private lateinit var binding: FragmentRegisterBinding
-    // Servicio para poder utilizar el retrofit
-    @Inject
-    lateinit var incidentService: IncidentService
+    private val viewModel: UserViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -97,7 +96,7 @@ class Register : Fragment() {
                   .createFormData("file", file.name, fileRequestBody)
 
                 lifecycleScope.launch {
-                    var call = incidentService.api.addNewUser(user)
+                    val call = viewModel.register(user)
                     call.enqueue(object : Callback<String> {
                         override fun onResponse(call: Call<String>, response: Response<String>) {
                             if(!response.isSuccessful) {

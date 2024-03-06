@@ -19,9 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.incidenciasparkingpmdm.R
-import com.example.incidenciasparkingpmdm.api.IncidentService
 import com.example.incidenciasparkingpmdm.databinding.FragmentCreateInBinding
-import com.example.incidenciasparkingpmdm.ui.user.User
 import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -32,13 +30,10 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreateInFragment : Fragment() {
     private lateinit var binding: FragmentCreateInBinding
-    @Inject
-    lateinit var incidentService: IncidentService
     private val incidentViewModel: IncidentViewModel by activityViewModels()
     private val args : CreateInFragmentArgs by navArgs()
     private lateinit var uri: Uri
@@ -91,7 +86,6 @@ class CreateInFragment : Fragment() {
         }
 
         binding.filledButtonCreate.setOnClickListener {
-            val user = requireActivity().intent.getSerializableExtra("user") as? User
             val incidentDto = IncidentDto(binding.titleInputTitulo.text.toString(),
                 binding.titleInputDesc.text.toString(),
                 false,
@@ -111,8 +105,7 @@ class CreateInFragment : Fragment() {
 
                 lifecycleScope.launch {
                     try {
-                        val header = incidentService.getHeader(user?.email.toString(), user?.password.toString())
-                        val call = incidentService.api.addIncident(header, incidentDto, filePart)
+                        val call = incidentViewModel.createIncident(incidentDto, filePart)
                         val response = call.execute()
                     } catch (e: Exception) {
 

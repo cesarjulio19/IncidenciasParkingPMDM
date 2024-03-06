@@ -6,25 +6,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.incidenciasparkingpmdm.R
-import com.example.incidenciasparkingpmdm.api.IncidentService
 import com.example.incidenciasparkingpmdm.databinding.FragmentEditUserBinding
 import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @AndroidEntryPoint
-class EditUserFragment : Fragment() {
+class EditUserFragment() : Fragment() {
     private lateinit var binding: FragmentEditUserBinding
-    @Inject
-    lateinit var service: IncidentService
-
+    private val viewModel: UserViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,16 +45,53 @@ class EditUserFragment : Fragment() {
         }
         lifecycleScope.launch {
             val user = requireActivity().intent.getSerializableExtra("user") as? User
+            val list = listOf<String>("DAW","DAM","SMR")
+            val mutableList: MutableList<String> = mutableListOf()
+            list.forEach{
+                mutableList.add(it)
+            }
+            val autoCompleteTextView: AutoCompleteTextView = binding.autoComplete
+            val adapter = ArrayAdapter(requireContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                mutableList)
+            autoCompleteTextView.setAdapter(adapter)
             binding.name.text = "${user?.name} ${user?.surname}"
-            binding.titleInputCpostal.setText(user?.postalCode.toString())
             binding.titleInputDirec.setText(user?.address)
-            binding.autoComplete.setText(user?.schoolYear)
+            autoCompleteTextView.setText(user?.schoolYear)
             binding.textButtonEditPhoto.setOnClickListener {
                 pickPhotoFromGallery()
+            }
+            binding.saveButton.setOnClickListener {
+                lifecycleScope.launch {
+                    if(hasBeenChanged(binding.titleInputDirec.text.toString(),
+                            autoCompleteTextView.text.toString())) {
+                        val updatedUser = User(user?.id!!, user.name,
+                            user.surname, user.nif, user.email, user.password, user.postalCode,
+                                binding.titleInputDirec.text.toString(), user.rol, autoCompleteTextView.text.toString(),
+                                user.parkingAccess)
+                        val call = viewModel.updateUser(updatedUser.id!!, updatedUser)
+                        call.enqueue(object : Callback<String> {
+                            override fun onResponse(
+                                call: Call<String>,
+                                response: Response<String>
+                            ) {
+                            }
+
+                            override fun onFailure(call: Call<String>, t: Throwable) {
+                            }
+                        })
+                        findNavController().popBackStack()
+                    }
+
+                }
             }
         }
     }
 
+    private fun hasBeenChanged(address: String, schoolYear: String): Boolean {
+        return address != binding.titleInputDirec.text.toString() ||
+                schoolYear != binding.autoComplete.text.toString()
+    }
 
 
 

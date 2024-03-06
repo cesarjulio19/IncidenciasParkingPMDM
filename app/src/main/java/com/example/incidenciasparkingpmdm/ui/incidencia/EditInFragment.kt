@@ -21,7 +21,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.incidenciasparkingpmdm.R
-import com.example.incidenciasparkingpmdm.api.IncidentService
 import com.example.incidenciasparkingpmdm.databinding.FragmentEditInBinding
 import com.example.incidenciasparkingpmdm.ui.user.User
 import com.google.android.material.appbar.MaterialToolbar
@@ -34,14 +33,11 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class EditInFragment : Fragment() {
     private lateinit var binding: FragmentEditInBinding
     private val args: EditInFragmentArgs by navArgs()
-    @Inject
-    lateinit var incidentService: IncidentService
     private val incidentViewModel: IncidentViewModel by activityViewModels()
     private var uri: Uri = Uri.EMPTY
     private val observer = Observer<Incident> {
@@ -96,7 +92,7 @@ class EditInFragment : Fragment() {
 
             incidentViewModel.updateUriEditData(data.toUri())
         }
-        incidentViewModel.fetchIncident(user?.email.toString(), user?.password.toString(), args.id)
+        incidentViewModel.fetchIncident(args.id)
         incidentViewModel.incident.observe(viewLifecycleOwner,observer)
 
         binding.filledButtonEdit.setOnClickListener {
@@ -116,8 +112,7 @@ class EditInFragment : Fragment() {
 
                 lifecycleScope.launch {
                     try {
-                        val header = incidentService.getHeader(user?.email.toString(), user?.password.toString())
-                        val call = incidentService.api.updateIncident(header, args.id,incidentDto,filePart)
+                        val call = incidentViewModel.updateIncident(args.id,incidentDto,filePart)
                         val response = call.execute()
                     } catch (e: Exception) {
 

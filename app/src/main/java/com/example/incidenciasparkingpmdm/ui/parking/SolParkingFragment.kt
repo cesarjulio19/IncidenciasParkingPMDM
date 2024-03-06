@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.incidenciasparkingpmdm.R
-import com.example.incidenciasparkingpmdm.api.IncidentService
 import com.example.incidenciasparkingpmdm.databinding.FragmentSolParkingBinding
 import com.example.incidenciasparkingpmdm.ui.user.User
 import com.google.android.material.appbar.MaterialToolbar
@@ -16,13 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class SolParkingFragment : Fragment() {
+class SolParkingFragment: Fragment() {
     private lateinit var binding: FragmentSolParkingBinding
-    @Inject
-    lateinit var service: IncidentService
+    private val viewModel : ParkingViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,9 +44,9 @@ class SolParkingFragment : Fragment() {
                     binding.titleInputColor.text.toString(),
                     binding.titleInputMatr.text.toString(),
                     user.id!!)
-                val pRequest = ParkingRequestDto(null, null, user.id)
-                val callVehicle = service.api.addVehicle(vehicle)
-                val callRequest = service.api.addRequest(pRequest)
+                val pRequest = ParkingRequestDto(false, null, user.id)
+                val callVehicle = viewModel.postVehicle(vehicle)
+                val callRequest = viewModel.postRequest(pRequest)
                 callVehicle.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
                         if(response.isSuccessful) {

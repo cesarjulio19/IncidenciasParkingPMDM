@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.incidenciasparkingpmdm.R
-import com.example.incidenciasparkingpmdm.api.IncidentService
 import com.example.incidenciasparkingpmdm.databinding.FragmentParkingSolPenBinding
 import com.example.incidenciasparkingpmdm.ui.user.User
 import com.google.android.material.appbar.MaterialToolbar
@@ -18,13 +19,11 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ParkingSolPenFragment : Fragment() {
     private lateinit var binding: FragmentParkingSolPenBinding
-    @Inject
-    lateinit var service: IncidentService
+    private val viewModel: ParkingViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,10 +37,22 @@ class ParkingSolPenFragment : Fragment() {
         val topAppBar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         lifecycleScope.launch {
             topAppBar.title = getString(R.string.parking_title)
-            val vehicles = service.api.getAllVehicles()
-            val parkingRequests = service.api.getAllParkingRequests()
-            var pRequest: ParkingRequest? = null
-            var vehicle: Vehicle? = null
+            val vehicles: MutableList<Vehicle> = mutableListOf()
+            val parkingRequests: MutableList<ParkingRequest> = mutableListOf()
+            lateinit var vehicle:Vehicle
+            lateinit var pRequest:ParkingRequest
+            val observerRequests = Observer<List<ParkingRequest>> {
+                it.map {
+                        request -> parkingRequests.add(request)
+                }
+            }
+            val observerVehicles = Observer<List<Vehicle>> {
+                it.map {
+                        vehicle -> vehicles.add(vehicle)
+                }
+            }
+            viewModel.parkingRequest.observe(viewLifecycleOwner, observerRequests)
+            viewModel.vehicleList.observe(viewLifecycleOwner, observerVehicles)
             val user = this@ParkingSolPenFragment.requireActivity().intent.getSerializableExtra("user") as? User
             Log.e("UserID del user", user?.id.toString())
             vehicles.map {
@@ -56,17 +67,17 @@ class ParkingSolPenFragment : Fragment() {
                     pRequest = it
                 }
             }
-            if(pRequest?.state == false) {
-                Log.e("Vehiculo",vehicle?.model!!)
-                Log.e("Solicitud",pRequest?.date.toString())
-                binding.colorData.text = vehicle?.color
-                binding.marcaModeloData.text = vehicle?.model
-                binding.matriculaData.text = vehicle?.licensePlate
+            if(pRequest.state == false) {
+                Log.e("Vehiculo",vehicle.model)
+                Log.e("Solicitud",pRequest.date.toString())
+                binding.colorData.text = vehicle.color
+                binding.marcaModeloData.text = vehicle.model
+                binding.matriculaData.text = vehicle.licensePlate
                 binding.stateData.text = getString(R.string.pending_parking_request)
-                binding.date.text = pRequest?.date
+                binding.date.text = pRequest.date
                 binding.buttonDelete.setOnClickListener {
-                    val deleteReq = service.api.deleteParkingRequest(pRequest?.idReq!!)
-                    val deleteVehicle = service.api.deleteVehicle(vehicle?.idV!!)
+                    val deleteReq = viewModel.deleteRequest(pRequest.idReq)
+                    val deleteVehicle = viewModel.deleteVehicle(vehicle.idV)
                     deleteReq.enqueue(object : Callback<String> {
                         override fun onResponse(call: Call<String>, response: Response<String>) {
                             if(response.isSuccessful) {
