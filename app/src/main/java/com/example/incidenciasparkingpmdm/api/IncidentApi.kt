@@ -87,9 +87,6 @@ interface IncidentApi{
 
     @DELETE("api/vehicles/{idV}")
     fun deleteVehicle(@Path("idV") idV: Int): Call<String>
-
-    @DELETE("api/incidents/{idInc}")
-    fun deleteIncident(@Path("idInc") idInc: Int): Call<String>
 }
 
 class CsrfInterceptor @Inject constructor (/*private val token: String,*/ private val credentials:String) : Interceptor {
