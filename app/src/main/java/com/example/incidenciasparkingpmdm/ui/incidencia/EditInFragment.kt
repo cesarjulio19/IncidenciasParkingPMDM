@@ -29,6 +29,9 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -125,6 +128,26 @@ class EditInFragment : Fragment() {
             }else{
                 Log.e("Error", "La Uri es nula")
             }
+        }
+
+        binding.filledButtonDelete.setOnClickListener {
+            val deleteInc = incidentService.apiSinToken.deleteIncident(args.id)
+
+            deleteInc.enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    if(response.isSuccessful) {
+                        Log.e("Exito", response.body().toString())
+                    } else {
+                        Log.e("No exito","no exito")
+                    }
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Log.e("Fallo", t.message.toString())
+                }
+
+            })
+            findNavController().popBackStack()
         }
 
 
