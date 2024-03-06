@@ -24,7 +24,6 @@ import com.example.incidenciasparkingpmdm.R
 import com.example.incidenciasparkingpmdm.databinding.FragmentPreviewCameraBinding
 import com.example.incidenciasparkingpmdm.ui.incidencia.IncidentViewModel
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -70,9 +69,6 @@ class PreviewCameraFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val topAppBar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         topAppBar.title = getString(R.string.take_photo)
-        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation)
-        bottomNavigationView.menu.close()
-
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
 

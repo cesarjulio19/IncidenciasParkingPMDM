@@ -4,37 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/blue">
+    android:background="@color/blue"
+    android:paddingTop="90dp">
 
-
-
-    <Button
-        style="@style/Widget.Material3.Button.TextButton"
-        android:id="@+id/textButton_edit_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Editar Foto"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="20dp" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textButton_edit_photo"
-        app:civ_border_width="5dp"
-        app:civ_border_color="#FF000000"/>
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:textSize="20dp"
@@ -46,7 +24,7 @@
         android:id="@+id/title_label_cpostal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Código Postal"
+        android:hint="@string/postalCode"
         app:layout_constraintTop_toBottomOf="@+id/name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +41,7 @@
         android:id="@+id/title_label_direc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Dirección"
+        android:hint="@string/address_label"
         app:layout_constraintTop_toBottomOf="@+id/title_label_cpostal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +58,7 @@
         android:id="@+id/title_label_curso"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Curso"
+        android:hint="@string/scholar_year"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         app:layout_constraintTop_toBottomOf="@+id/title_label_direc"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
-            android:text="Elige el curso"
+            android:text="@string/choose_scholar_year"
             android:background="@color/white"
             />
 
@@ -102,7 +80,7 @@
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Guardar"
+        android:text="@string/save_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

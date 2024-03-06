@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide
 import com.example.incidenciasparkingpmdm.R
 import com.example.incidenciasparkingpmdm.databinding.FragmentCreateInBinding
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
@@ -53,7 +54,8 @@ class CreateInFragment : Fragment() {
         topAppBar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-
+        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation)
+        bottomNavigationView.setPadding(0,0,0,0)
         binding.textButtonArchivo.setOnClickListener {
              val action = CreateInFragmentDirections
                  .actionCreateInFragmentToPreviewCameraFragment()

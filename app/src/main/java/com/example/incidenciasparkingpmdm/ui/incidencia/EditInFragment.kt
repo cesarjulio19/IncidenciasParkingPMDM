@@ -24,6 +24,7 @@ import com.example.incidenciasparkingpmdm.R
 import com.example.incidenciasparkingpmdm.databinding.FragmentEditInBinding
 import com.example.incidenciasparkingpmdm.ui.user.User
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
@@ -66,8 +67,8 @@ class EditInFragment : Fragment() {
         topAppBar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-
-
+        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation)
+        bottomNavigationView.setPadding(0,0,0,0)
         incidentViewModel.uriEdit.observe(viewLifecycleOwner){
             if(it != null){
                 Glide.with(this)

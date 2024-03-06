@@ -5,21 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.user.UserFragment"
-    android:padding="80dp"
+    android:padding="60dp"
     android:layout_marginTop="20dp">
 
-    <FrameLayout
-        android:id="@+id/layout_photo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        >
-        <ImageView
-            android:id="@+id/user_photo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"/>
-    </FrameLayout>
     <LinearLayout
         android:id="@+id/layout_texts"
         android:layout_width="match_parent"
@@ -49,4 +37,13 @@
         android:textColor="@color/white"
         android:layout_gravity="end"
         />
+    <Button
+        android:id="@+id/logout"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:text="@string/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom | end"
+        android:textColor="@color/black"
+        android:layout_marginTop="90dp"/>
 </LinearLayout>

@@ -5,6 +5,7 @@
     <string name="email_label">Email</string>
     <string name="password_label">Password</string>
     <string name="to_register_button">No account yet?</string>
+    <string name="to_login_button">Have account? Log in!</string>
     <string name="login_button">Access</string>
     <string name="incidents_title">INCIDENTS</string>
     <string name="parking_title">PARKING</string>
@@ -30,4 +31,14 @@
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="create">Create</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="check_password">Check Password</string>
+    <string name="postalCode">Postal Code</string>
+    <string name="scholar_year">Scholar Year</string>
+    <string name="choose_scholar_year">Choose your scholar year</string>
+    <string name="send">Send</string>
+    <string name="no_access">You do not have access to Parking</string>
+    <string name="request_parking">Request Parking</string>
+    <string name="logout">Log out</string>
 </resources>
