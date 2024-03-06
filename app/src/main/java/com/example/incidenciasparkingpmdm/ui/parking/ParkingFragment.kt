@@ -31,6 +31,7 @@ class ParkingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val topAppBar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
+        topAppBar.navigationIcon = null
         lifecycleScope.launch {
             val user = this@ParkingFragment.requireActivity().intent.getSerializableExtra("user") as? User
             if(hasRequest(user!!)) findNavController().navigate(R.id.parkingSolPenFragment)

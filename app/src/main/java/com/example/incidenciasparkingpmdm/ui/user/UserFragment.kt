@@ -25,6 +25,7 @@ class UserFragment : Fragment() {
         val user = this.requireActivity().intent.getSerializableExtra("user") as? User
         val topAppBar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         topAppBar.title = getString(R.string.profile)
+        topAppBar.navigationIcon = null
         if(user != null) {
             binding.userName.text = "${user.name} ${user.surname}"
             binding.userSchoolYear.text = user.schoolYear

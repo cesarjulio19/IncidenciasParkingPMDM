@@ -44,7 +44,7 @@
         android:id="@+id/textButton_archivo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+ Añadir Foto"
+        android:text="@string/take_photo"
         app:layout_constraintTop_toBottomOf="@+id/title_label_desc"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="20dp"
@@ -55,7 +55,7 @@
         android:id="@+id/textButton_galeria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+ Añadir Foto Galeria"
+        android:text="@string/add_from_gallery"
         app:layout_constraintTop_toBottomOf="@+id/textButton_archivo"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="20dp"
@@ -76,7 +76,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,26 +86,14 @@
             android:id="@+id/filledButton_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Editar"
+            android:text="@string/save_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:background="@color/white"
-            android:textColor="@color/black"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"
             android:layout_margin="50dp"
-            />
-
-        <Button
-            android:id="@+id/filledButton_Delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Eliminar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/filledButton_edit"
-            android:background="@color/white"
-            android:textColor="@color/black"
-            android:layout_margin="50dp"
+            android:layout_gravity="center"
             />
 
     </LinearLayout>

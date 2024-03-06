@@ -15,7 +15,8 @@
     <string name="register_title">Register</string>
     <string name="address_label">Address</string>
     <string name="parking_request">PARKING REQUEST</string>
-    <string name="tomar_foto">Take Photo</string>
+    <string name="tomar_foto">+ Take Photo</string>
+    <string name="add_from_gallery">+ Add From Gallery</string>
     <string name="pending_parking_request">Pending</string>
     <string name="delete">Delete</string>
     <string name="state">State</string>
@@ -25,4 +26,8 @@
     <string name="take_photo">CAMERA</string>
     <string name="profile">PROFILE</string>
     <string name="edit_profile_title">EDIT PROFILE</string>
+    <string name="save_button">Save</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="create">Create</string>
 </resources>

@@ -39,6 +39,7 @@ class IncidenciaFragment: Fragment() {
         val user: User? = requireActivity().intent.getSerializableExtra("user") as? User
         val topAppBar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         topAppBar.title = getString(R.string.incidents_title)
+        topAppBar.navigationIcon = null
         val adapter = IncidentAdapter(::onShowEdit, ::onDeleteIncident)
         val rv = binding.incidentList
         val observer = Observer<List<Incident>> {
@@ -74,7 +75,7 @@ class IncidenciaFragment: Fragment() {
             }
 
         })
+        list.removeAt(position)
         adapter.notifyItemRemoved(position)
-        incidentViewModel.fetch()
     }
 }

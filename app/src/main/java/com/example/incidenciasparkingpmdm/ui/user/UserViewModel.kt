@@ -8,7 +8,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(private val service: IncidentService): ViewModel() {
-
     suspend fun login(credentials: Credentials): Boolean {
         return service.api.login(credentials)
     }

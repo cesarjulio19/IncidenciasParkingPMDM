@@ -37,6 +37,7 @@ class ParkingSolPenFragment : Fragment() {
         val topAppBar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         lifecycleScope.launch {
             topAppBar.title = getString(R.string.parking_title)
+            topAppBar.navigationIcon = null
             val vehicles: MutableList<Vehicle> = mutableListOf()
             val parkingRequests: MutableList<ParkingRequest> = mutableListOf()
             lateinit var vehicle:Vehicle
