@@ -111,6 +111,8 @@ class CreateInFragment : Fragment() {
 
                         Log.e("Error", "Error en la llamada: ${e.message}", e)
                     }
+                    incidentViewModel.updateUriData(Uri.EMPTY)
+                    incidentViewModel.updateFileData(File(""))
                     findNavController().popBackStack()
                 }
             } else {
