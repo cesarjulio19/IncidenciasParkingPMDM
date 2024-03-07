@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.incidenciasparkingpmdm.R
@@ -34,7 +33,9 @@ class ParkingFragment : Fragment() {
         topAppBar.navigationIcon = null
         lifecycleScope.launch {
             val user = this@ParkingFragment.requireActivity().intent.getSerializableExtra("user") as? User
-            if(hasRequest(user!!)) findNavController().navigate(R.id.parkingSolPenFragment)
+            val parkingRequests = viewModel.getAllParkRequests()
+            val vehicles = viewModel.getAllVehicles()
+            if(hasRequest(user!!, parkingRequests, vehicles)) findNavController().navigate(R.id.parkingSolPenFragment)
             topAppBar.title = getString(R.string.parking_title)
             binding.filledButtonSolicitarParking.setOnClickListener {
                 val action = ParkingFragmentDirections.actionParkingFragmentToSolParkingFragment()
@@ -44,23 +45,9 @@ class ParkingFragment : Fragment() {
 
     }
 
-    private fun hasRequest(user: User): Boolean {
+    private fun hasRequest(user: User, parkingRequests: List<ParkingRequest>, vehicles:List<Vehicle>): Boolean {
         var hasRequest = false
         var hasVehicle = false
-        val vehicles: MutableList<Vehicle> = mutableListOf()
-        val parkingRequests: MutableList<ParkingRequest> = mutableListOf()
-        val observerRequests = Observer<List<ParkingRequest>> {
-            it.map {
-                request -> parkingRequests.add(request)
-            }
-        }
-        val observerVehicles = Observer<List<Vehicle>> {
-            it.map {
-                vehicle -> vehicles.add(vehicle)
-            }
-        }
-        viewModel.parkingRequest.observe(viewLifecycleOwner, observerRequests)
-        viewModel.vehicleList.observe(viewLifecycleOwner, observerVehicles)
         parkingRequests.map {
             if(user.id == it.user.id) {
                 hasRequest = true

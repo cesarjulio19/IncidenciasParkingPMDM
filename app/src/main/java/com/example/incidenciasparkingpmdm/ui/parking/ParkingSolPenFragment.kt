@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.incidenciasparkingpmdm.R
@@ -38,22 +37,10 @@ class ParkingSolPenFragment : Fragment() {
         lifecycleScope.launch {
             topAppBar.title = getString(R.string.parking_title)
             topAppBar.navigationIcon = null
-            val vehicles: MutableList<Vehicle> = mutableListOf()
-            val parkingRequests: MutableList<ParkingRequest> = mutableListOf()
-            lateinit var vehicle:Vehicle
-            lateinit var pRequest:ParkingRequest
-            val observerRequests = Observer<List<ParkingRequest>> {
-                it.map {
-                        request -> parkingRequests.add(request)
-                }
-            }
-            val observerVehicles = Observer<List<Vehicle>> {
-                it.map {
-                        vehicle -> vehicles.add(vehicle)
-                }
-            }
-            viewModel.parkingRequest.observe(viewLifecycleOwner, observerRequests)
-            viewModel.vehicleList.observe(viewLifecycleOwner, observerVehicles)
+            var vehicle:Vehicle? = null
+            var pRequest:ParkingRequest? = null
+            val parkingRequests = viewModel.getAllParkRequests()
+            val vehicles = viewModel.getAllVehicles()
             val user = this@ParkingSolPenFragment.requireActivity().intent.getSerializableExtra("user") as? User
             Log.e("UserID del user", user?.id.toString())
             vehicles.map {
@@ -68,17 +55,19 @@ class ParkingSolPenFragment : Fragment() {
                     pRequest = it
                 }
             }
-            if(pRequest.state == false) {
-                Log.e("Vehiculo",vehicle.model)
-                Log.e("Solicitud",pRequest.date.toString())
-                binding.colorData.text = vehicle.color
-                binding.marcaModeloData.text = vehicle.model
-                binding.matriculaData.text = vehicle.licensePlate
+            Log.d("PETICION", pRequest?.date.toString())
+            Log.d("VEHICULO", vehicle?.model.toString())
+            if(pRequest?.state == false) {
+                Log.e("Vehiculo",vehicle?.model.toString())
+                Log.e("Solicitud",pRequest?.date.toString())
+                binding.colorData.text = vehicle?.color
+                binding.marcaModeloData.text = vehicle?.model
+                binding.matriculaData.text = vehicle?.licensePlate
                 binding.stateData.text = getString(R.string.pending_parking_request)
-                binding.date.text = pRequest.date
+                binding.date.text = pRequest?.date
                 binding.buttonDelete.setOnClickListener {
-                    val deleteReq = viewModel.deleteRequest(pRequest.idReq)
-                    val deleteVehicle = viewModel.deleteVehicle(vehicle.idV)
+                    val deleteReq = viewModel.deleteRequest(pRequest?.idReq!!)
+                    val deleteVehicle = viewModel.deleteVehicle(vehicle?.idV!!)
                     deleteReq.enqueue(object : Callback<String> {
                         override fun onResponse(call: Call<String>, response: Response<String>) {
                             if(response.isSuccessful) {

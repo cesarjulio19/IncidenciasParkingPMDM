@@ -94,7 +94,6 @@ class Register: Fragment() {
                 // creo el filePart
                 val filePart = MultipartBody.Part
                   .createFormData("file", file.name, fileRequestBody)
-
                 lifecycleScope.launch {
                     val call = viewModel.register(user)
                     call.enqueue(object : Callback<String> {

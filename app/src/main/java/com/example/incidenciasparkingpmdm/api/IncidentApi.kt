@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.incidenciasparkingpmdm.AppModule.baseURL
 import com.example.incidenciasparkingpmdm.ui.incidencia.Incident
 import com.example.incidenciasparkingpmdm.ui.incidencia.IncidentDto
+import com.example.incidenciasparkingpmdm.ui.login.Holder
 import com.example.incidenciasparkingpmdm.ui.parking.ParkingRequest
 import com.example.incidenciasparkingpmdm.ui.parking.ParkingRequestDto
 import com.example.incidenciasparkingpmdm.ui.parking.Vehicle
@@ -89,16 +90,15 @@ interface IncidentApi{
     fun deleteVehicle(@Path("idV") idV: Int): Call<String>
 }
 
-class CsrfInterceptor @Inject constructor (/*private val token: String,*/ private val credentials:String) : Interceptor {
+class AuthInterceptor @Inject constructor (private val authHeader:Holder) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val originalRequest = chain.request()
 
-        val requestWithCsrf = originalRequest.newBuilder()
-            .addHeader("Authorization", credentials)
-            //.addHeader("X-CSRF-TOKEN",token)
+        val requestWithAuth = originalRequest.newBuilder()
+            .addHeader("Authorization", authHeader.credentials)
             .build()
-        return chain.proceed(requestWithCsrf)
+        return chain.proceed(requestWithAuth)
 
     }
 }
@@ -108,7 +108,7 @@ class CsrfInterceptor @Inject constructor (/*private val token: String,*/ privat
    la cabecera(No se si esta bien echo, el código con el csrf esta comentado)
  */
 @Singleton
-class IncidentService @Inject constructor(private val interceptor: CsrfInterceptor) {
+class IncidentService @Inject constructor(private val interceptor: AuthInterceptor) {
     private val retrofit = Retrofit.Builder().baseUrl(baseURL)
         .addConverterFactory(GsonConverterFactory.create())
         .client(

@@ -40,7 +40,9 @@ class Login : Fragment() {
             val intent = Intent(this.activity, MainActivity::class.java)
             lifecycleScope.launch {
                 val credentials = Credentials(binding.emailInput.editText?.text.toString(), binding.passwordInput.editText?.text.toString())
+                val authHeader = okhttp3.Credentials.basic(credentials.email, credentials.password)
                 val isLogged = viewModel.login(credentials)
+                viewModel.loginHeader(authHeader)
                 if (isLogged) {
                     val callUser = viewModel.getUser(credentials.email);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
