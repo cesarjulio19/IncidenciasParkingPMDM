@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">IncidenciasParkingPMDM</string>
+    <string name="app_name">IncidenciasParkingApp</string>
     <string name="welcome_title">Bienvenido</string>
     <string name="login_title">Iniciar sesión</string>
     <string name="email_label">Correo electrónico</string>

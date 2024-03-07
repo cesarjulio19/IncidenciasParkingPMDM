@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IncidenciasParkingPMDM</string>
+    <string name="app_name">IncidenciasParkingApp</string>
     <string name="welcome_title">Welcome</string>
     <string name="login_title">Log in</string>
     <string name="email_label">Email</string>
