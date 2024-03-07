@@ -1,10 +1,11 @@
 <resources>
-    <string name="app_name">IncidenciasParkingPMDM</string>
+    <string name="app_name">IncidenciasParkingApp</string>
     <string name="welcome_title">Welcome</string>
     <string name="login_title">Log in</string>
     <string name="email_label">Email</string>
     <string name="password_label">Password</string>
     <string name="to_register_button">No account yet?</string>
+    <string name="to_login_button">Have account? Log in!</string>
     <string name="login_button">Access</string>
     <string name="incidents_title">INCIDENTS</string>
     <string name="parking_title">PARKING</string>
@@ -15,11 +16,29 @@
     <string name="register_title">Register</string>
     <string name="address_label">Address</string>
     <string name="parking_request">PARKING REQUEST</string>
-    <string name="tomar_foto">Take Photo</string>
+    <string name="tomar_foto">+ Take Photo</string>
+    <string name="add_from_gallery">+ Add From Gallery</string>
     <string name="pending_parking_request">Pending</string>
     <string name="delete">Delete</string>
     <string name="state">State</string>
     <string name="color">Color</string>
     <string name="brand_model">Brand and Model</string>
     <string name="licensePlate">License plate</string>
+    <string name="take_photo">CAMERA</string>
+    <string name="profile">PROFILE</string>
+    <string name="edit_profile_title">EDIT PROFILE</string>
+    <string name="save_button">Save</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="create">Create</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="check_password">Check Password</string>
+    <string name="postalCode">Postal Code</string>
+    <string name="scholar_year">Scholar Year</string>
+    <string name="choose_scholar_year">Choose your scholar year</string>
+    <string name="send">Send</string>
+    <string name="no_access">You do not have access to Parking</string>
+    <string name="request_parking">Request Parking</string>
+    <string name="logout">Log out</string>
 </resources>

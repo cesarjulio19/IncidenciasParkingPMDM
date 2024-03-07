@@ -14,16 +14,18 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:paddingHorizontal="8dp"/>
+
     <Button
         android:id="@+id/add_button"
         style="?attr/materialIconButtonFilledStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom | end"
+        android:layout_margin="16dp"
         android:backgroundTint="@color/black"
         app:cornerRadius="12dp"
         app:icon="@android:drawable/ic_menu_edit"
-        android:layout_gravity="bottom | end"
-        android:layout_margin="16dp"/>
+        app:iconTint="@color/white" />
 
 
 

@@ -1,7 +1,6 @@
 package com.example.incidenciasparkingpmdm
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -19,12 +18,12 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    @Inject
+    lateinit var service: IncidentService
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
     var pRequest: ParkingRequest? = null
-    @Inject
-    lateinit var service: IncidentService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -57,9 +56,5 @@ class MainActivity : AppCompatActivity() {
             }
             navView.setupWithNavController(navController)
         }
-    }
-
-    fun onEditProfile(view: View){
-        navController.navigate(R.id.editUserFragment)
     }
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">IncidenciasParkingApp</string>
+    <string name="welcome_title">Bienvenido</string>
+    <string name="login_title">Iniciar sesión</string>
+    <string name="email_label">Correo electrónico</string>
+    <string name="password_label">Contraseña</string>
+    <string name="to_register_button">¿No tienes cuenta todavía?</string>
+    <string name="to_login_button">¿Ya tienes cuenta? ¡Inicia sesión!</string>
+    <string name="login_button">Acceder</string>
+    <string name="incidents_title">INCIDENCIAS</string>
+    <string name="parking_title">PARKING</string>
+    <string name="add_inc_title">NUEVA INCIDENCIA</string>
+    <string name="edit_inc_title">EDITAR INCIDENCIA</string>
+    <string name="edit_profile_button">Editar perfil</string>
+    <string name="logout_button">Cerrar sesión</string>
+    <string name="register_title">Registro</string>
+    <string name="address_label">Dirección</string>
+    <string name="parking_request">SOLICITUD DE PARKING</string>
+    <string name="tomar_foto">+ Tomar Foto</string>
+    <string name="add_from_gallery">+ Añadir desde Galería</string>
+    <string name="pending_parking_request">Pendiente</string>
+    <string name="delete">Eliminar</string>
+    <string name="state">Estado</string>
+    <string name="color">Color</string>
+    <string name="brand_model">Marca y Modelo</string>
+    <string name="licensePlate">Matrícula</string>
+    <string name="take_photo">CÁMARA</string>
+    <string name="profile">PERFIL</string>
+    <string name="edit_profile_title">EDITAR PERFIL</string>
+    <string name="save_button">Guardar</string>
+    <string name="title">Título</string>
+    <string name="description">Descripción</string>
+    <string name="create">Crear</string>
+    <string name="name">Nombre</string>
+    <string name="surname">Apellido</string>
+    <string name="check_password">Verificar Contraseña</string>
+    <string name="postalCode">Código Postal</string>
+    <string name="scholar_year">Curso</string>
+    <string name="choose_scholar_year">Elige tu curso</string>
+    <string name="send">Enviar</string>
+    <string name="no_access">No tienes acceso al Parking</string>
+    <string name="request_parking">Solicitar Parking</string>
+    <string name="logout">Cerrar sesión</string>
+</resources>

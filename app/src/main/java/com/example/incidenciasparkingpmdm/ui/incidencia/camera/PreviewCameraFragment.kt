@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +16,14 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.incidenciasparkingpmdm.R
 import com.example.incidenciasparkingpmdm.databinding.FragmentPreviewCameraBinding
 import com.example.incidenciasparkingpmdm.ui.incidencia.IncidentViewModel
+import com.google.android.material.appbar.MaterialToolbar
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -66,7 +67,8 @@ class PreviewCameraFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val topAppBar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
+        topAppBar.title = getString(R.string.take_photo)
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
 
@@ -123,7 +125,7 @@ class PreviewCameraFragment : Fragment() {
         val photoFile = File(
             outputDirectory,
             SimpleDateFormat("yy-MM-dd-HH-mm-ss-SSS", Locale.getDefault())
-                .format(System.currentTimeMillis()) +".jpg")
+                .format(System.currentTimeMillis()) +".jpeg")
 
 
         val outputOption = ImageCapture.OutputFileOptions.Builder(photoFile).build()
